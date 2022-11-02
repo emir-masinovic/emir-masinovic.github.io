@@ -1,157 +1,214 @@
+/// <reference path='babylon.d.ts' />
+
 window.addEventListener('DOMContentLoaded', function()
-			{
-				
-				var canvas = document.getElementById('canvas');
-				var engine = new BABYLON.Engine(canvas, true);
+{
+	var canvas = document.getElementById('canvas');
+	var engine = new BABYLON.Engine(canvas, true);
 
-				var createScene = function(){
-					var scene = new BABYLON.Scene(engine);
-					// scene.clearColor = new BABYLON.Color3.White();
+	var arcCamera;
+	var freeCamera;
+	var scene;
+	var shape;
 
-					var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
-					light.intensity = 0.9;
+	function switchCam(cameraType) {
+		if (cameraType == "arc camera"){
+			freeCamera.detachControl(canvas);
+			arcCamera.lockedTarget = shape;
+			scene.activeCamera = arcCamera;
+			arcCamera.attachControl(canvas, true);
+			return arcCamera;
+		}
+		if (cameraType == "free camera")
+			arcCamera.detachControl(canvas);
+			// freeCamera.lockedTarget = shape;
+			scene.activeCamera = freeCamera;
+			freeCamera.attachControl(canvas, true);
+			return freeCamera;
+	}
 
-					var box = BABYLON.Mesh.CreateBox("Box",2.0,scene);
-					let boxMaterial = new BABYLON.StandardMaterial("Box Material", scene);
-					boxMaterial.diffuseTexture = new BABYLON.Texture("textures/box.jpg", scene);
-					box.material = boxMaterial;
-					box.position.y = 1
+	function moveBox(start, end, direct){
+		const animBox = new BABYLON.Animation("Animation", direct, 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+		const boxKeys = [];
 
-					var followCamera = new BABYLON.ArcRotateCamera("FollowCam", 
-						BABYLON.Tools.ToRadians(-90),
-						BABYLON.Tools.ToRadians(70),
-						10.0, box.position, scene);
-					followCamera.attachControl(canvas,true);
-					followCamera.lockedTarget = box;
-				
-					// camera.keysUp.push(87);
-					// camera.keysDown.push(83);
-					followCamera.keysLeft.push(81); //Q
-					followCamera.keysRight.push(69); //E
+		boxKeys.push({
+			frame: 0,
+			value: start
+		});
 
-					// TODO toggle between cameras
-					// var freeCamera = new BABYLON.FreeCamera('camera1', new BABYLON.Vector3(0,0,-10), scene);
-					// freeCamera.setTarget(BABYLON.Vector3.Zero());              
-					// freeCamera.attachControl(canvas,true);              
-					// freeCamera.keysUp.push(87);    //W
-					// freeCamera.keysRight.push(68); //S
-					// freeCamera.keysDown.push(83)   //D
-					// freeCamera.keysLeft.push(65);  //A			
+		boxKeys.push({
+			frame: 30,
+			value: end
+		});
 
-					var sound = new BABYLON.Sound("move", "sounds/move.mp3", scene);
-					const speed = 5;
+		boxKeys.push({
+			frame: 60,
+			value: end
+		});
 
-					scene.onKeyboardObservable.add((kbInfo) => {
-						switch (kbInfo.type) {
-							case BABYLON.KeyboardEventTypes.KEYDOWN:
-								switch (kbInfo.event.key) {
-									case "a":
-									case "A":
-										box.position.x -= speed;
-										sound.play();
-									break
+		animBox.setKeys(boxKeys);
 
-									case "d":
-									case "D":
-										box.position.x += speed;
-										sound.play();
-									break
+		shape.animations = [];
+		shape.animations.push(animBox);
 
-									case "w":
-									case "W":
-										box.position.z += speed;
-										sound.play();
-									break
+		scene.beginDirectAnimation(shape, [animBox], 0, 30, false, 2);
+		
+	}
 
-									case "s":
-									case "S":
-										box.position.z -= speed;
-										sound.play();
-									break
+	var createScene = function(){
+		scene = new BABYLON.Scene(engine);
+		var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
+		light.intensity = 0.9;
 
-									case "o":
-									case "O":
-									// toggleCamera = true;
-									console.log("Toggle camera = true");
-							}
-							break;
-						}
-					});			
-					
+		var sound = new BABYLON.Sound("move", "sounds/move.mp3", scene);
 
-					var ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 10, height: 100}, scene);
-					ground.position.z = 50;
-					ground.position.y = 0;
+		freeCamera = new BABYLON.FreeCamera(
+			"freeCamera", 
+			new BABYLON.Vector3(0, 5, -10), 
+			scene);
+			freeCamera.keysUp.push(38);
+			freeCamera.keysRight.push(39);
+			freeCamera.keysDown.push(40);
+			freeCamera.keysLeft.push(37);
 
-					let groundMaterial = new BABYLON.StandardMaterial("Ground Material", scene);
-					groundMaterial.diffuseTexture = new BABYLON.Texture("textures/cobblestone.jpg", scene);
-					groundMaterial.diffuseTexture.uScale = 1;
-					groundMaterial.diffuseTexture.vScale = 7;
-					ground.material = groundMaterial;
+		arcCamera = new BABYLON.ArcRotateCamera(
+			"arcCamera",
+			BABYLON.Tools.ToRadians(-90),
+			BABYLON.Tools.ToRadians(80),
+			10.0, 
+			new BABYLON.Vector3(0, 0, 0),
+			scene);
+			arcCamera.keysUp.push(38);
+			arcCamera.keysRight.push(39);
+			arcCamera.keysDown.push(40);
+			arcCamera.keysLeft.push(37);
 
-					var ground2 = BABYLON.MeshBuilder.CreateGround("ground2", {width: 100, height: 10}, scene);
-					ground2.position.z = 105;
-					ground2.position.y = 0;
-					
-					let ground2Material = new BABYLON.StandardMaterial("Ground2 Material", scene);
-					ground2Material.diffuseTexture = new BABYLON.Texture("textures/cobblestone.jpg", scene);
-					ground2Material.diffuseTexture.uScale = 7;
-					ground2Material.diffuseTexture.vScale = 1;
-					ground2.material = ground2Material;
+		var box = BABYLON.Mesh.CreateBox("Box", 2.0, scene);
+		let boxMaterial = new BABYLON.StandardMaterial("Box Material", scene);
+		boxMaterial.diffuseTexture = new BABYLON.Texture("textures/box.jpg", scene);
+		box.material = boxMaterial;
+		box.position.y = 1
+		shape = box;
 
-					var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
-					skyboxMaterial.backFaceCulling = false;
-					skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("textures/skybox", scene);
-					skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
-					skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
-					skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
-					var skybox = BABYLON.MeshBuilder.CreateBox("skyBox", {size:100.0}, scene);
-					skybox.material = skyboxMaterial;
-					// camera.upperBetaLimit = Math.PI / 2.2;
+		arcCamera.lockedTarget = shape;
+		arcCamera.attachControl(canvas, true);
+		scene.activeCamera = arcCamera;
+	
+		var ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 10, height: 666}, scene);
+		ground.position.z = 50;
+		ground.position.y = 0;
 
-					var outerBoxMaterial = new BABYLON.StandardMaterial("outerbox", scene);
-					outerBoxMaterial.backFaceCulling = false;
-					outerBoxMaterial.reflectionTexture = new BABYLON.CubeTexture("textures/redbox", scene);
-					outerBoxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
-					outerBoxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
-					outerBoxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
-					var outerBox = BABYLON.MeshBuilder.CreateBox("outerbox", {size:1000.0}, scene);
-					outerBox.material = outerBoxMaterial;
-										
-					// TODO Bind box with animation... somehow
-					// const animBox = new BABYLON.Animation("Animation", "position.x", 30, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
-					// const boxKeys = []; 
+		let groundMaterial = new BABYLON.StandardMaterial("Ground Material", scene);
+		groundMaterial.diffuseTexture = new BABYLON.Texture("textures/cobblestone.jpg", scene);
+		groundMaterial.diffuseTexture.uScale = 1;
+		groundMaterial.diffuseTexture.vScale = 40;
+		ground.material = groundMaterial;
 
-					// boxKeys.push({
-					// 	frame: 0,
-					// 	value: -4
-					// });
+		var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
+		skyboxMaterial.backFaceCulling = false;
+		skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("textures/skybox", scene);
+		skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
+		skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
+		skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+		var skybox = BABYLON.MeshBuilder.CreateBox("skyBox", {size:100.0}, scene);
+		skybox.material = skyboxMaterial;
+		// camera.upperBetaLimit = Math.PI / 2.2;
 
-					// boxKeys.push({
-					// 	frame: 150,
-					// 	value: 4
-					// });
+		// var outerBoxMaterial = new BABYLON.StandardMaterial("outerbox", scene);
+		// outerBoxMaterial.backFaceCulling = false;
+		// outerBoxMaterial.reflectionTexture = new BABYLON.CubeTexture("textures/redbox", scene);
+		// outerBoxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
+		// outerBoxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
+		// outerBoxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+		// var outerBox = BABYLON.MeshBuilder.CreateBox("outerbox", {size:1000.0}, scene);
+		// outerBox.material = outerBoxMaterial;
 
-					// boxKeys.push({
-					// 	frame: 210,
-					// 	value: 4
-					// });
+		var wideBoxMaterial = new BABYLON.StandardMaterial("wideBox", scene);
+		wideBoxMaterial.backFaceCulling = false;
+		wideBoxMaterial.reflectionTexture = new BABYLON.CubeTexture("textures/widebox", scene);
+		wideBoxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
+		wideBoxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
+		wideBoxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+		var wideBox = BABYLON.MeshBuilder.CreateBox("wideBox", {size:1000.0}, scene);
+		wideBox.material = wideBoxMaterial;
 
-					// animBox.setKeys(boxKeys);
+		var speed = 10;
+		var starPos;
+		var endPos;
 
-					// box.animations = [];
-					// box.animations.push(animBox);
+		scene.onKeyboardObservable.add((kbInfo) => {
+			switch (kbInfo.type) {
+				case BABYLON.KeyboardEventTypes.KEYDOWN:
+					switch (kbInfo.event.key) {
 
-					// scene.beginAnimation(box, 0, 210, true);
-					
-					return scene;
+						case "w":
+						case "W":
+							// box.position.z += speed;
+							starPos = box.position.z;
+							endPos = box.position.z + speed;
+							moveBox(starPos, endPos, "position.z");
+							sound.play();
+
+							break
+
+						case "s":
+						case "S":
+							// box.position.z -= speed;
+							starPos = box.position.z;
+							endPos = box.position.z - speed;
+							moveBox(starPos, endPos, "position.z");
+							sound.play();
+							break
+
+						case "a":
+						case "A":
+							// box.position.x -= speed;
+							starPos = box.position.x;
+							endPos = box.position.x - speed;
+							moveBox(starPos, endPos, "position.x");
+							sound.play();
+							break
+
+						case "d":
+						case "D":
+							// box.position.x += speed;
+							starPos = box.position.x;
+							endPos = box.position.x + speed;
+							moveBox(starPos, endPos, "position.x");
+							sound.play();
+							break						
+							
+
+						case "o":
+						case "O":
+							switchCam("free camera");
+							break
+
+						case "p":
+						case "P":
+							switchCam("arc camera");
+							break
 				}
+				break;
+			}
+		});
 
-				var scene = createScene();
+		var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("myUI");
+		var text1 = new BABYLON.GUI.TextBlock();
+		text1.text = "Move Box - WSAD\n Move Camera - Arrow keys and mouse\n o - free camera\n p - locked arc camera";
+		// text1.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
+		text1.textVerticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+		// text1.width = "50%";
+		text1.color = "white";
+		text1.fontSize = 15;
+		advancedTexture.addControl(text1);
+		
+		return scene;
+	}
+	
+	var scene = createScene();
 
-				engine.runRenderLoop(function(){
-					//Need 2 scenes for cameras
-					scene.render();
-				});
-	  
-			});
+	engine.runRenderLoop(function(){
+		scene.render();
+	});
+
+});
