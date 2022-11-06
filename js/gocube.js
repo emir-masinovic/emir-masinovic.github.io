@@ -1,15 +1,21 @@
+/// <reference path='babylon.d.ts' />
+
 window.addEventListener('DOMContentLoaded', function()
 {
 	var canvas = document.getElementById('canvas');
 	var engine = new BABYLON.Engine(canvas, true);
 
-	let divFps = document.getElementById("fps");
 	engine.displayLoadingUI();
+	let divFps = document.getElementById("fps");
 	
 	var arcCamera;
 	var freeCamera;
 	// var scene;
 	var shape;
+	var forwardConstant = false;
+	var backwardsConstant = false;
+	var leftConstant = false;
+	var rightConstant = false;
 
 	var createScene = function(){
 		scene = new BABYLON.Scene(engine);
@@ -86,7 +92,7 @@ window.addEventListener('DOMContentLoaded', function()
 
 		var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("myUI");
 		var text1 = new BABYLON.GUI.TextBlock();
-		text1.text = "\n Move Box - WSAD space + ctrl \n Rotate left, right - q, r \nFree camera, Arc Camera - o, p\n Toggle constant speed, speed up, speed down - 1,2,3 \n Restart position - r";
+		text1.text = "\n Move Box - WSAD space + ctrl | Rotate left, right - q, r \nFree camera, Arc Camera - o, p | Restart position - r\n Toggle constant speed, speed up, speed down - 1,2,3 | arrow keys for direction";
 		// text1.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
 		text1.textVerticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT;
 		// text1.width = "20%";
@@ -160,18 +166,22 @@ window.addEventListener('DOMContentLoaded', function()
 
 						case "ArrowUp":
 							// console.log("Arrow up pressed");
+							forwardConstant = true - forwardConstant;
 							break
 
 						case "ArrowLeft":
 							// console.log("Arrow left pressed");
+							leftConstant = true - leftConstant;
 							break
 
 						case "ArrowRight":
 							// console.log("Arrow right pressed");
+							rightConstant = true - rightConstant;
 							break
 
 						case "ArrowDown":
 							// console.log("Arrow down pressed");
+							backwardsConstant = true - backwardsConstant;
 							break
 
 						case " ":
@@ -268,7 +278,7 @@ window.addEventListener('DOMContentLoaded', function()
 
 		scene.beginDirectAnimation(shape, [animBox], 0, 60, false, 2);
 
-		console.log(shape.position.x, shape.position.y, shape.position.z);
+		console.log(shape.position);
 	}
 
 	function switchCam(cameraType) {
@@ -287,13 +297,28 @@ window.addEventListener('DOMContentLoaded', function()
 			return freeCamera;
 	}
 
+	function moveConstanty(){
+		if (forwardConstant == true){
+			shape.position.z = shape.position.z + constantSpeed;
+		}
+		if (backwardsConstant == true){
+			shape.position.z = shape.position.z - constantSpeed;
+		}
+		if (leftConstant == true){
+			shape.position.x = shape.position.x - constantSpeed;
+		}
+		if (rightConstant == true){
+			shape.position.x = shape.position.x + constantSpeed;
+		}
+	}
+
 	var scene = createScene();
 	var toggleConstantSpeed = false;
 	var constantSpeed = 0.1;
 
 	engine.runRenderLoop(function(){
 		if (toggleConstantSpeed == true){
-			shape.position.z = shape.position.z + constantSpeed;
+			moveConstanty();
 		}
 
 		//border limit
