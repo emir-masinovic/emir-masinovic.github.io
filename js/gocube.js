@@ -1,5 +1,3 @@
-/// <reference path='babylon.d.ts' />
-
 window.addEventListener('DOMContentLoaded', function()
 {
 	var canvas = document.getElementById('canvas');
@@ -92,13 +90,17 @@ window.addEventListener('DOMContentLoaded', function()
 
 		var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("myUI");
 		var text1 = new BABYLON.GUI.TextBlock();
-		text1.text = "\n Move Box - WSAD space + ctrl | Rotate left, right - q, r \nFree camera, Arc Camera - o, p | Restart position - r\n Toggle constant speed, speed up, speed down - 1,2,3 | arrow keys for direction";
+		text1.text = "\n Move: WSAD, space, ctrl 		 Rotate: q, r \n Free camera, Arc Camera - o, p 		Restart position - r \n Act const speed, acc, dec - 1,2,3 Direction(const): arrow keys";
 		// text1.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
 		text1.textVerticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT;
 		// text1.width = "20%";
 		text1.color = "white";
 		text1.fontSize = 15;
 		advancedTexture.addControl(text1);
+
+		let plugin = BABYLON.SceneLoader.GetPluginForExtension('babylon');
+		plugin.extensions = ".json";
+		BABYLON.SceneLoader.RegisterPlugin(plugin);
 
 		var speed = 5;
 		var starPos;
@@ -278,7 +280,7 @@ window.addEventListener('DOMContentLoaded', function()
 
 		scene.beginDirectAnimation(shape, [animBox], 0, 60, false, 2);
 
-		console.log(shape.position);
+		console.log(shape.position.x, shape.position.y, shape.position.z);
 	}
 
 	function switchCam(cameraType) {
