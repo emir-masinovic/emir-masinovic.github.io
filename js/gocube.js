@@ -3,23 +3,22 @@
 window.addEventListener('DOMContentLoaded', function()
 {
 	let canvas = document.getElementById('canvas');
-	var engine = new BABYLON.Engine(canvas, true);
+	let engine = new BABYLON.Engine(canvas, false);
 
 	engine.displayLoadingUI();
 	// let divFps = document.getElementById("fps");
 	
-	var arcCamera;
-	var freeCamera;
-	// var scene;
-	var shape;
-	var forwardConstant = false;
-	var backwardsConstant = false;
-	var leftConstant = false;
-	var rightConstant = false;
+	let arcCamera = null;
+	let freeCamera = null;
+	let shape = null;
+	let forwardConstant = false;
+	let backwardsConstant = false;
+	let leftConstant = false;
+	let rightConstant = false;
 
-	var createScene = function(){
+	let createScene = function(){
 		scene = new BABYLON.Scene(engine);
-		var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
+		let light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
 		light.intensity = 1;
 
 		freeCamera = new BABYLON.FreeCamera(
@@ -38,7 +37,7 @@ window.addEventListener('DOMContentLoaded', function()
 			scene);
 			arcCamera.inputs.remove(arcCamera.inputs.attached.keyboard);
 
-		var box = BABYLON.Mesh.CreateBox("Box", 2.0, scene);
+		let box = BABYLON.Mesh.CreateBox("Box", 2.0, scene);
 		let boxMaterial = new BABYLON.StandardMaterial("Box Material", scene);
 		boxMaterial.diffuseTexture = new BABYLON.Texture("textures/box.jpg", scene);
 		box.material = boxMaterial;
@@ -49,7 +48,7 @@ window.addEventListener('DOMContentLoaded', function()
 		arcCamera.attachControl(canvas, false);
 		scene.activeCamera = arcCamera;
 	
-		var ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 1000, height: 1000}, scene);
+		let ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 1000, height: 1000}, scene);
 		// ground.position.z = 50;
 		ground.position.y = -1;
 
@@ -60,8 +59,8 @@ window.addEventListener('DOMContentLoaded', function()
 		ground.material = groundMaterial;
 
 
-		// var skybox = BABYLON.MeshBuilder.CreateBox("skyBox", {size:500}, scene);
-		// var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
+		// let skybox = BABYLON.MeshBuilder.CreateBox("skyBox", {size:500}, scene);
+		// let skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
 		// skyboxMaterial.backFaceCulling = false;
 		// skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("textures/skybox", scene);
 		// skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
@@ -71,8 +70,8 @@ window.addEventListener('DOMContentLoaded', function()
 		// // camera.upperBetaLimit = Math.PI / 2.2;
 
 		
-		var outerBox = BABYLON.MeshBuilder.CreateBox("outerbox", {size:2000.0}, scene);
-		var outerBoxMaterial = new BABYLON.StandardMaterial("outerbox", scene);
+		let outerBox = BABYLON.MeshBuilder.CreateBox("outerbox", {size:2000.0}, scene);
+		let outerBoxMaterial = new BABYLON.StandardMaterial("outerbox", scene);
 		outerBoxMaterial.backFaceCulling = false;
 		outerBoxMaterial.reflectionTexture = new BABYLON.CubeTexture("textures/redbox", scene);
 		outerBoxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
@@ -81,8 +80,8 @@ window.addEventListener('DOMContentLoaded', function()
 		outerBox.material = outerBoxMaterial;
 
 
-		// var wideBox = BABYLON.MeshBuilder.CreateBox("wideBox", {size:10000.0}, scene);
-		// var wideBoxMaterial = new BABYLON.StandardMaterial("wideBox", scene);
+		// let wideBox = BABYLON.MeshBuilder.CreateBox("wideBox", {size:10000.0}, scene);
+		// let wideBoxMaterial = new BABYLON.StandardMaterial("wideBox", scene);
 		// wideBoxMaterial.backFaceCulling = false;
 		// wideBoxMaterial.reflectionTexture = new BABYLON.CubeTexture("textures/widebox", scene);
 		// wideBoxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
@@ -90,9 +89,9 @@ window.addEventListener('DOMContentLoaded', function()
 		// wideBoxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
 		// wideBox.material = wideBoxMaterial;
 
-		var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("myUI");
+		let advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("myUI");
 		// let fps = engine.getFps().toFixed();
-		var text1 = new BABYLON.GUI.TextBlock();
+		let text1 = new BABYLON.GUI.TextBlock();
 		text1.text = "\n" +
 			"Move Box - WSAD space + ctrl\n" +
 			"Rotate left, right - q, e\n" +
@@ -109,7 +108,7 @@ window.addEventListener('DOMContentLoaded', function()
 		text1.fontSize = 16;
 		advancedTexture.addControl(text1);
 
-		// var text2 = new BABYLON.GUI.TextBlock();
+		// let text2 = new BABYLON.GUI.TextBlock();
 		// text2.text = "21321"
 		// text2.textVerticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT;
 		// text2.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT;
@@ -125,11 +124,11 @@ window.addEventListener('DOMContentLoaded', function()
 		// plugin.extensions = ".json";
 		// BABYLON.SceneLoader.RegisterPlugin(plugin);
 
-		var speed = 5;
-		var starPos;
-		var endPos;
+		let speed = 5;
+		let starPos = null;
+		let endPos = null;
 
-		var sound = new BABYLON.Sound("move", "sounds/move.mp3", scene);
+		let sound = new BABYLON.Sound("move", "sounds/move.mp3", scene);
 
 		scene.onKeyboardObservable.add((kbInfo) => {
 			switch (kbInfo.type) {
@@ -338,8 +337,8 @@ window.addEventListener('DOMContentLoaded', function()
 	}
 
 	var scene = createScene();
-	var toggleConstantSpeed = false;
-	var constantSpeed = 0.1;
+	let toggleConstantSpeed = false;
+	let constantSpeed = 0.1;
 
 	BABYLON.SceneLoader.ImportMesh("", "textures/", "city2.glb", scene, function (newMeshes) {
         let city = newMeshes[0];
@@ -347,18 +346,19 @@ window.addEventListener('DOMContentLoaded', function()
 		city.position.x = -485;
 		city.position.z = 100;
     });
-	// var options = new BABYLON.SceneOptimizerOptions(60, 500);
-	// options.addOptimization(new BABYLON.HardwareScalingOptimization(0, 1));
-	// options.addOptimization(new BABYLON.HardwareScalingOptimization(0, 1.5));
-	// options.addCustomOptimization(function () {
-	// 	environment.ground.setEnabled(false);
-	// 	return true;
-	// }, function () {
-	// 	return "Turning ground off";
-	// });
 
-	// var optimizer = new BABYLON.SceneOptimizer(scene, options);
-	// optimizer.start();
+	let options = new BABYLON.SceneOptimizerOptions(60, 500);
+	// options.addOptimization(new BABYLON.HardwareScalingOptimization(0, 1));
+	options.addOptimization(new BABYLON.HardwareScalingOptimization(0, 1.5));
+	options.addCustomOptimization(function () {
+		environment.ground.setEnabled(false);
+		return true;
+	}, function () {
+		return "Turning ground off";
+	});
+
+	let optimizer = new BABYLON.SceneOptimizer(scene, options);
+	optimizer.start();
 
 	engine.runRenderLoop(function(){
 		if (toggleConstantSpeed == true){

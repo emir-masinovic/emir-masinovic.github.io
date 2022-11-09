@@ -13,16 +13,17 @@
             background: radial-gradient(ellipse at top, #4795c3, transparent),
             radial-gradient(ellipse at bottom, #4d9f0c, transparent);
             background-repeat: no-repeat;
-            height: 100vh;
+            height: 100%;
             width: 100%;
         
         }
 
-        @media (max-width:768px) {
+        /* @media (max-width:768px) {
             body {
-                height: 300vh!important;
+                height: 100%;
             }
-        }
+        } */
+
     </style>
 </head>
     
@@ -31,7 +32,7 @@
 
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container-fluid ">
+            <div class="container-fluid">
                 <a class="navbar-brand" href="#"></a>
                 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,19 +64,19 @@
         <div class="container">
 
             <div class="row">
-               <div class="col-md-5 col-sm mx-auto my-3">
+               <div class="col-md-5 col-sm mx-auto my-5">
                     <img 
                     src="/image/emir.jpg"
                     alt="" 
                     class="img-fluid rounded-circle col-sm mx-auto">
                </div>
 
-               <div class="col-7 mt-3 col-sm mx-auto my-3">
+               <div class="col-6 mt-3 mx-auto my-5" id="descript">
                     <h1>Emir Masinovic</h1>
                     <p class="lead">I'm working on combining website design and computer graphics.</p>
 
-                    <div id ="cube" class="text-center">
-                        <canvas id="game-surface" width="300" height="300">
+                    <div id="cube" class="text-center" >
+                        <canvas id="game-surface" width="300" height="300" style="margin-left: -30px;">
                             Your browser doesn't support HTML5
                         </canvas>
                     </div>
@@ -85,10 +86,11 @@
         </div>
     </main>
 
-    <!-- <footer class="mt-auto d-none">
-        <h2>Footer goes here</h2>
-    </footer> -->
-
+    <footer>
+       <div class="container">
+         <h2 style="opacity: 0.0;">Footer goes here</h2>
+       </div>
+    </footer>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
