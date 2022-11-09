@@ -2,11 +2,11 @@
 
 window.addEventListener('DOMContentLoaded', function()
 {
-	var canvas = document.getElementById('canvas');
-	var engine = new BABYLON.Engine(canvas, false);
+	let canvas = document.getElementById('canvas');
+	var engine = new BABYLON.Engine(canvas, true);
 
 	engine.displayLoadingUI();
-	let divFps = document.getElementById("fps");
+	// let divFps = document.getElementById("fps");
 	
 	var arcCamera;
 	var freeCamera;
@@ -91,21 +91,39 @@ window.addEventListener('DOMContentLoaded', function()
 		// wideBox.material = wideBoxMaterial;
 
 		var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("myUI");
+		// let fps = engine.getFps().toFixed();
 		var text1 = new BABYLON.GUI.TextBlock();
-		text1.text = "\n Move Box - WSAD space + ctrl \n Rotate left, right - q, r \nFree camera, Arc Camera - o, p\n Toggle constant speed, speed up, speed down - 1,2,3 \n Restart position - r";
+		text1.text = "\n" +
+			"Move Box - WSAD space + ctrl\n" +
+			"Rotate left, right - q, e\n" +
+			"Free camera, Arc Camera - o, p\n" +
+			"Toggle constant speed, speed up, speed down - 1,2,3\n" +
+			"Restart position - r ";
 		// text1.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
 		text1.textVerticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT;
 		// text1.width = "20%";
 		text1.color = "white";
 		text1.shadowColor = "black";
-		text1.shadowOffsetX = 3;
-		text1.shadowOffsetY = 3;
-		text1.fontSize = 30;
+		text1.shadowOffsetX = 1;
+		text1.shadowOffsetY = 1;
+		text1.fontSize = 16;
 		advancedTexture.addControl(text1);
 
-		let plugin = BABYLON.SceneLoader.GetPluginForExtension('babylon');
-		plugin.extensions = ".json";
-		BABYLON.SceneLoader.RegisterPlugin(plugin);
+		// var text2 = new BABYLON.GUI.TextBlock();
+		// text2.text = "21321"
+		// text2.textVerticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT;
+		// text2.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT;
+		// text1.width = "20%";
+		// text2.color = "white";
+		// text2.shadowColor = "black";
+		// text2.shadowOffsetX = 1;
+		// text2.shadowOffsetY = 1;
+		// text2.fontSize = 14;
+		// advancedTexture.addControl(text2);
+
+		// let plugin = BABYLON.SceneLoader.GetPluginForExtension('babylon');
+		// plugin.extensions = ".json";
+		// BABYLON.SceneLoader.RegisterPlugin(plugin);
 
 		var speed = 5;
 		var starPos;
@@ -319,32 +337,28 @@ window.addEventListener('DOMContentLoaded', function()
 		}
 	}
 
-	
-
 	var scene = createScene();
 	var toggleConstantSpeed = false;
 	var constantSpeed = 0.1;
 
 	BABYLON.SceneLoader.ImportMesh("", "textures/", "city2.glb", scene, function (newMeshes) {
-        // Set the target of the camera to the first imported mesh
-        a = newMeshes[0];
-        a.position.y = 2;
-		a.position.x = -485;
-		a.position.z = 100;
-      
+        let city = newMeshes[0];
+        city.position.y = 2;
+		city.position.x = -485;
+		city.position.z = 100;
     });
-	var options = new BABYLON.SceneOptimizerOptions(60, 500);
-	options.addOptimization(new BABYLON.HardwareScalingOptimization(0, 1));
-	options.addOptimization(new BABYLON.HardwareScalingOptimization(0, 1.5));
-	options.addCustomOptimization(function () {
-		environment.ground.setEnabled(false);
-		return true;
-	}, function () {
-		return "Turning ground off";
-	});
+	// var options = new BABYLON.SceneOptimizerOptions(60, 500);
+	// options.addOptimization(new BABYLON.HardwareScalingOptimization(0, 1));
+	// options.addOptimization(new BABYLON.HardwareScalingOptimization(0, 1.5));
+	// options.addCustomOptimization(function () {
+	// 	environment.ground.setEnabled(false);
+	// 	return true;
+	// }, function () {
+	// 	return "Turning ground off";
+	// });
 
-	var optimizer = new BABYLON.SceneOptimizer(scene, options);
-	optimizer.start();
+	// var optimizer = new BABYLON.SceneOptimizer(scene, options);
+	// optimizer.start();
 
 	engine.runRenderLoop(function(){
 		if (toggleConstantSpeed == true){
@@ -354,8 +368,9 @@ window.addEventListener('DOMContentLoaded', function()
 		//border limit
 		if (shape.position.z > 15000){
 			shape.position.z = 0;
-		}	
-		divFps.innerHTML = engine.getFps().toFixed() + " fps";
+		}
+
+		// divFps.innerHTML = engine.getFps().toFixed() + " fps";
 		scene.render();
 	});
 

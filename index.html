@@ -14,19 +14,40 @@
             radial-gradient(ellipse at bottom, #4d9f0c, transparent);
             background-repeat: no-repeat;
             height: 100%;
+            width: 100%;
         
         }
-        .container{
-            min-height: 90%; 
+        /* #cube{
+            border-style: 2px solid black;
+            align-items: left;
+            background-color: red;
+        } */
+        /* @media (max-width: 500px) {
+            .container {
+            padding:0;
+            margin:0;
+            }
+
+            body {
+            padding-right:-500px;
+            }
+
+            .navbar-fixed-top, .navbar-fixed-bottom, .navbar-static-top {
+            margin-left: 0;
+            margin-right: 0;
+            margin-bottom:0;
+            }
+        } */
+        /* .container{
             min-height: 100vh; 
             display: flex;
             align-items: center;
-        }
+        } */
     </style>
 </head>
     
-
- <body class="body d-flex flex-column min-vh-100" onload="InitDemo();">
+<!--  <body class="body d-flex flex-column min-vh-100" onload="InitDemo();"> -->
+ <body class="body d-flex flex-column min-vh-100 min-vw-100" onload="InitDemo();">
 
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -73,7 +94,7 @@
                     <h1>Emir Masinovic</h1>
                     <p class="lead">I'm working on combining website design and computer graphics.</p>
 
-                    <div class="cube text-center">
+                    <div id ="cube" class="text-center">
                         <canvas id="game-surface" width="300" height="300">
                             Your browser doesn't support HTML5
                         </canvas>
@@ -84,9 +105,9 @@
         </div>
     </main>
 
-    <footer class="mt-auto d-none">
+    <!-- <footer class="mt-auto d-none">
         <h2>Footer goes here</h2>
-    </footer>
+    </footer> -->
 
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
