@@ -346,18 +346,18 @@ window.addEventListener('DOMContentLoaded', function() {
         city.position.z = 100;
     });
 
-    let options = new BABYLON.SceneOptimizerOptions(60, 500);
-    // options.addOptimization(new BABYLON.HardwareScalingOptimization(0, 1));
-    options.addOptimization(new BABYLON.HardwareScalingOptimization(0, 1.5));
-    options.addCustomOptimization(function() {
-        environment.ground.setEnabled(false);
-        return true;
-    }, function() {
-        return "Turning ground off";
-    });
+    // let options = new BABYLON.SceneOptimizerOptions(60, 500);
+    // // options.addOptimization(new BABYLON.HardwareScalingOptimization(0, 1));
+    // options.addOptimization(new BABYLON.HardwareScalingOptimization(0, 1.5));
+    // options.addCustomOptimization(function() {
+    //     environment.ground.setEnabled(false);
+    //     return true;
+    // }, function() {
+    //     return "Turning ground off";
+    // });
 
-    let optimizer = new BABYLON.SceneOptimizer(scene, options);
-    optimizer.start();
+    // let optimizer = new BABYLON.SceneOptimizer(scene, options);
+    // optimizer.start();
 
     engine.runRenderLoop(function() {
         if (toggleConstantSpeed == true) {
