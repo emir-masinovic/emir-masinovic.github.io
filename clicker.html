@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Clicker Leaderboard</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/clicker.css">
+    <style>
+        #click-inside {
+            -moz-animation: cssAnimation 0s ease-in 5s forwards;
+            /* Firefox */
+            -webkit-animation: cssAnimation 0s ease-in 5s forwards;
+            /* Safari and Chrome */
+            -o-animation: cssAnimation 0s ease-in 5s forwards;
+            /* Opera */
+            animation: cssAnimation 0s ease-in 5s forwards;
+            -webkit-animation-fill-mode: forwards;
+            animation-fill-mode: forwards;
+        }
+        
+        @keyframes cssAnimation {
+            to {
+                width: 0;
+                height: 0;
+                overflow: hidden;
+            }
+        }
+        
+        @-webkit-keyframes cssAnimation {
+            to {
+                width: 0;
+                height: 0;
+                visibility: hidden;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+            <div class="container-fluid ">
+                <a class="navbar-brand" href="#"></a>
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+
+                <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+
+                    <i class="bi bi-x-diamond text-white"></i>
+                    <ul class="navbar-nav">
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="GoCube.html">GoCube</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="clicker.html">Clicker</a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+    </header> -->
+
+    <div class="container-fluid h-100">
+        <div class="row h-100">
+
+            <div id="clicker" class="col-lg-9 col-md-8 col-sm-7 col-6  d-flex align-items-center justify-content-center">
+                <div id="click-inside" class="fw-light">Click inside</div>
+            </div>
+
+            <div id="table-holder" class="col-lg-3 col-md-4 col-sm-5 col-6 h-100">
+                <div id="table-outer" class="table-responsive fw-light">
+                    <table id="table-inner" class="table table-sm">
+                        <thead id="thead">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Score</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Magnus</td>
+                                <td>35</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>Jacob</td>
+                                <td>22</td>
+
+                            </tr>
+                            <tr>
+                                <th scope="row">3</th>
+                                <td>Sonya</td>
+                                <td>11</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">4</th>
+                                <td>Finnian</td>
+                                <td>9</td>
+
+                            </tr>
+                            <tr>
+                                <th scope="row">5</th>
+                                <td>Jacob</td>
+                                <td>8</td>
+
+                            </tr>
+                            <tr>
+                                <th scope="row">6</th>
+                                <td>T-Jay</td>
+                                <td>7</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">7</th>
+                                <td>Mark</td>
+                                <td>6</td>
+
+                            </tr>
+                            <tr>
+                                <th scope="row">8</th>
+                                <td>Jacob</td>
+                                <td>5</td>
+
+                            </tr>
+                            <tr>
+                                <th scope="row">9</th>
+                                <td>Mahoney</td>
+                                <td>2</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">10</th>
+                                <td>Guy</td>
+                                <td>1</td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="your-score" class="col">Your score:</div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- <footer class="d-flex border border-danger rounded" style="opacity: 0;">
+      Footer goes here!
+    </footer> -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="/js/clicker.js"></script>
+</body>
+
+</html>
