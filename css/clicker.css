@@ -16,10 +16,10 @@ body {
 
 #clicker {
     color: #e2ded0c7;
-    /* border: 2px solid #C34795 */
-    border-top: 2px solid #C34795;
+    border: 2px solid #C34795
+    /* border-top: 2px solid #C34795;
     border-left: 2px solid #C34795;
-    border-bottom: 2px solid #C34795;
+    border-bottom: 2px solid #C34795; */
 }
 
 #click-inside {
@@ -27,7 +27,7 @@ body {
 }
 
 #table-holder {
-    border: 2px solid #C34795;
+    border-left: 2px solid #C34795;
 }
 
 #table-outer {
@@ -37,6 +37,10 @@ body {
 #table-inner {
     color: #e2ded0c7;
     border-color: #C34795;
+    max-height: 90vh;
+    overflow: auto;
+    display: inline-block;
+    /* --table-width: 100%; */
 }
 
 #thead {
@@ -47,6 +51,12 @@ body {
     border-bottom: 2px solid #C34795;
     color: #e2ded0c7;
     text-shadow: 1px 1px #C34795;
+}
+
+#text-name {
+    background-color: transparent;
+    border: 2px solid #C34795;
+    color: #e2ded0c7;
 }
 
 

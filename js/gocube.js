@@ -1,24 +1,20 @@
-/// <reference path='babylon.d.ts' />
-
-window.addEventListener('DOMContentLoaded', function() {
+window.addEventListener('DOMContentLoaded', async function() {
     let canvas = document.getElementById('canvas');
     let engine = new BABYLON.Engine(canvas, false);
 
     engine.displayLoadingUI();
-    // let divFps = document.getElementById("fps");
 
     let arcCamera = null;
     let freeCamera = null;
     let shape = null;
-    let forwardConstant = false;
-    let backwardsConstant = false;
-    let leftConstant = false;
-    let rightConstant = false;
 
-    let createScene = function() {
+    let createScene = async function() {
+
         scene = new BABYLON.Scene(engine);
+        scene.enablePhysics(new BABYLON.Vector3(0, -9.81, 0), new BABYLON.CannonJSPlugin());
+
         let light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
-        light.intensity = 1;
+        light.intensity = 2;
 
         freeCamera = new BABYLON.FreeCamera(
             "freeCamera",
@@ -36,273 +32,266 @@ window.addEventListener('DOMContentLoaded', function() {
             scene);
         arcCamera.inputs.remove(arcCamera.inputs.attached.keyboard);
 
-        let box = BABYLON.Mesh.CreateBox("Box", 2.0, scene);
-        let boxMaterial = new BABYLON.StandardMaterial("Box Material", scene);
-        boxMaterial.diffuseTexture = new BABYLON.Texture("textures/box.jpg", scene);
-        box.material = boxMaterial;
-        box.position.y = 0
-        shape = box;
+        let gridBox = BABYLON.Mesh.CreateBox("Box", 1.0, scene);
+        gridBox.physicsImpostor = new BABYLON.PhysicsImpostor(gridBox, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 2, friction: 0.0, restitution: 0 }, scene);
+        gridBox.checkCollisions = true;
+        shape = gridBox;
 
+        // let clone = gridBox.createInstance("gridBox copy")
+        // clone.position = new BABYLON.Vector3(0, 20, 0);
+        // clone.physicsImpostor = new BABYLON.PhysicsImpostor(clone, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 2, friction: 0.0, restitution: 0 }, scene);
+        // clone.checkCollisions = true;
+
+
+        let gridBoxMaterial = new BABYLON.GridMaterial("gridBoxMaterial", scene);
+        gridBoxMaterial.gridRatio = 0.3
+        gridBoxMaterial.lineColor = new BABYLON.Color3(1, 1, 0);
+        gridBox.material = gridBoxMaterial;
+        gridBox.position.y = 10
+
+        const maxCount = 100;
+        for (let i = 0; i < maxCount; i++) {
+            let clone = gridBox.createInstance("gridBox: " + i);
+            let scale = Math.random() * 10 + 0.3;
+            clone.scaling = clone.scaling.scale(scale);
+            let radius = Math.random() * 400;
+            let angle = Math.PI * 2 * Math.random();
+            clone.position = new BABYLON.Vector3(
+                Math.cos(angle) * radius,
+                Math.random() * 20,
+                Math.sin(angle) * radius
+            );
+            clone.rotation.x = Math.random() * Math.PI;
+            clone.rotation.y = Math.random() * Math.PI;
+            clone.rotation.z = Math.random() * Math.PI;
+            clone.rotationQuaternion = null;
+            clone.physicsImpostor = new BABYLON.PhysicsImpostor(clone, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 2, friction: 0.0, restitution: 0 }, scene);
+            clone.checkCollisions = true;
+        }
+
+        arcCamera.angularSensibilityX = 10000;
+        arcCamera.angularSensibilityY = 10000;
         arcCamera.lockedTarget = shape;
         arcCamera.attachControl(canvas, false);
         scene.activeCamera = arcCamera;
 
-        let ground = BABYLON.MeshBuilder.CreateGround("ground", { width: 1000, height: 1000 }, scene);
-        // ground.position.z = 50;
-        ground.position.y = -1;
+        let frontUV = new BABYLON.Vector4(0, 0, 0.5, 1); // front image = half the whole image along the width 
+        let backUV = new BABYLON.Vector4(0.5, 0, 1, 1);
+        let gridPlane = BABYLON.MeshBuilder.CreatePlane(
+            "gridPlane", {
+                width: 2000,
+                height: 2000,
+                sideOrientation: BABYLON.Mesh.DOUBLESIDE,
+                frontUVs: frontUV,
+                backUVs: backUV
+            },
+            scene);
+        // gridPlane.gridRatio = 100
+        gridPlane.position.x = 0;
+        gridPlane.position.y = -0.5;
+        gridPlane.rotation.x = BABYLON.Tools.ToRadians(90)
+        gridPlane.physicsImpostor = new BABYLON.PhysicsImpostor(gridPlane, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, friction: 0.0, restitution: 0.5 }, scene);
+        gridPlane.checkCollisions = true;
 
-        let groundMaterial = new BABYLON.StandardMaterial("Ground Material", scene);
-        groundMaterial.diffuseTexture = new BABYLON.Texture("textures/cobblestone.jpg", scene);
-        groundMaterial.diffuseTexture.uScale = 100;
-        groundMaterial.diffuseTexture.vScale = 40;
-        ground.material = groundMaterial;
-
-
-        // let skybox = BABYLON.MeshBuilder.CreateBox("skyBox", {size:500}, scene);
-        // let skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
-        // skyboxMaterial.backFaceCulling = false;
-        // skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("textures/skybox", scene);
-        // skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
-        // skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
-        // skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
-        // skybox.material = skyboxMaterial;
-        // // camera.upperBetaLimit = Math.PI / 2.2;
-
-
-        let outerBox = BABYLON.MeshBuilder.CreateBox("outerbox", { size: 2000.0 }, scene);
-        let outerBoxMaterial = new BABYLON.StandardMaterial("outerbox", scene);
-        outerBoxMaterial.backFaceCulling = false;
-        outerBoxMaterial.reflectionTexture = new BABYLON.CubeTexture("textures/redbox", scene);
-        outerBoxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
-        outerBoxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
-        outerBoxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
-        outerBox.material = outerBoxMaterial;
+        let gridPlaneMaterial = new BABYLON.GridMaterial("gridPlaneMaterial", scene);
+        gridPlaneMaterial.gridRatio = 3
+        gridPlaneMaterial.lineColor = new BABYLON.Color3(0.65, 0.27, 0.68, 0.62);
+        // gridPlaneMaterial.lineColor = new BABYLON.Color3.FromHexString("#F9C80E");
+        // gridPlaneMaterial.lineColor = new BABYLON.Color3(92, 0, 20);
+        // gridPlaneMaterial.majorUnitFrequency = 100;
+        gridPlane.material = gridPlaneMaterial;
 
 
-        // let wideBox = BABYLON.MeshBuilder.CreateBox("wideBox", {size:10000.0}, scene);
-        // let wideBoxMaterial = new BABYLON.StandardMaterial("wideBox", scene);
-        // wideBoxMaterial.backFaceCulling = false;
-        // wideBoxMaterial.reflectionTexture = new BABYLON.CubeTexture("textures/widebox", scene);
-        // wideBoxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
-        // wideBoxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
-        // wideBoxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
-        // wideBox.material = wideBoxMaterial;
+        let skyBox = BABYLON.Mesh.CreateBox("skyBox", 10000.0, scene);
+        let skyBoxMaterial = new BABYLON.SkyMaterial("skyBoxMaterial", scene);
+        // skyBoxMaterial.rayleigh = 0;
+        skyBoxMaterial.backFaceCulling = false;
+        skyBoxMaterial.inclination = -0.5;
+        skyBox.material = skyBoxMaterial;
+        // skyBoxMaterial.turbidity = 40
 
-        let advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("myUI");
-        // let fps = engine.getFps().toFixed();
-        let text1 = new BABYLON.GUI.TextBlock();
-        text1.text = "\n\n\n" +
-            "Move Box - WSAD space + ctrl\n" +
-            "Rotate left, right - q, e\n" +
-            "Free camera, Arc Camera - o, p\n" +
-            "Toggle constant speed, speed up, speed down - 1,2,3\n" +
-            "Restart position - r ";
-        // text1.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-        text1.textVerticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT;
-        // text1.width = "20%";
-        text1.color = "white";
-        text1.shadowColor = "black";
-        text1.shadowOffsetX = 1;
-        text1.shadowOffsetY = 1;
-        text1.fontSize = 14;
-        advancedTexture.addControl(text1);
+        /*
+         * Keys:
+         * - 1: Day
+         * - 2: Evening
+         * - 3: Increase Luminance
+         * - 4: Decrease Luminance
+         * - 5: Increase Turbidity
+         * - 6: Decrease Turbidity
+         * - 7: Move horizon to -50
+         * - 8: Restore horizon to 0
+         */
+        let setSkyConfig = function(property, from, to) {
+            let keys = [
+                { frame: 0, value: from },
+                { frame: 100, value: to }
+            ];
 
-        // let text2 = new BABYLON.GUI.TextBlock();
-        // text2.text = "21321"
-        // text2.textVerticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT;
-        // text2.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT;
-        // text1.width = "20%";
-        // text2.color = "white";
-        // text2.shadowColor = "black";
-        // text2.shadowOffsetX = 1;
-        // text2.shadowOffsetY = 1;
-        // text2.fontSize = 14;
-        // advancedTexture.addControl(text2);
+            let animation = new BABYLON.Animation("animation", property, 100, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+            animation.setKeys(keys);
 
-        // let plugin = BABYLON.SceneLoader.GetPluginForExtension('babylon');
-        // plugin.extensions = ".json";
-        // BABYLON.SceneLoader.RegisterPlugin(plugin);
+            scene.stopAnimation(skyBox);
+            scene.beginDirectAnimation(skyBox, [animation], 0, 100, false, 1);
+        };
 
-        let speed = 5;
-        let starPos = null;
-        let endPos = null;
+        window.addEventListener("keydown", function(evt) {
+            switch (evt.keyCode) {
+                case 49:
+                    setSkyConfig("material.inclination", skyBoxMaterial.inclination, 0);
+                    break; // 1
+                case 50:
+                    setSkyConfig("material.inclination", skyBoxMaterial.inclination, -0.5);
+                    break; // 2
 
-        let sound = new BABYLON.Sound("move", "sounds/move.mp3", scene);
+                case 51:
+                    setSkyConfig("material.luminance", skyBoxMaterial.luminance, 0.1);
+                    break; // 3
+                case 52:
+                    setSkyConfig("material.luminance", skyBoxMaterial.luminance, 1.0);
+                    break; // 4
 
-        scene.onKeyboardObservable.add((kbInfo) => {
-            switch (kbInfo.type) {
-                case BABYLON.KeyboardEventTypes.KEYDOWN:
-                    switch (kbInfo.event.key) {
-                        case "w":
-                        case "W":
-                            // box.position.z += speed;
-                            starPos = box.position.z;
-                            endPos = box.position.z + speed;
-                            moveBox(starPos, endPos, "position.z");
-                            sound.play();
-                            break
+                case 53:
+                    setSkyConfig("material.turbidity", skyBoxMaterial.turbidity, 40);
+                    break; // 5
+                case 54:
+                    setSkyConfig("material.turbidity", skyBoxMaterial.turbidity, 5);
+                    break; // 6
 
-                        case "s":
-                        case "S":
-                            // box.position.z -= speed;
-                            starPos = box.position.z;
-                            endPos = box.position.z - speed;
-                            moveBox(starPos, endPos, "position.z");
-                            sound.play();
-                            break
-
-                        case "a":
-                        case "A":
-                            // box.position.x -= speed;
-                            starPos = box.position.x;
-                            endPos = box.position.x - speed;
-                            moveBox(starPos, endPos, "position.x");
-                            sound.play();
-                            break
-
-                        case "d":
-                        case "D":
-                            // box.position.x += speed;
-                            starPos = box.position.x;
-                            endPos = box.position.x + speed;
-                            moveBox(starPos, endPos, "position.x");
-                            sound.play();
-                            break
-
-                        case "q":
-                        case "Q":
-                            // shape.rotation.y = shape.rotation.y + BABYLON.Tools.ToRadians(90);
-                            starPos = box.rotation.y;
-                            endPos = box.rotation.y + BABYLON.Tools.ToRadians(90);
-                            moveBox(starPos, endPos, "rotation.y");
-                            sound.play();
-                            break
-
-                        case "e":
-                        case "E":
-                            // shape.rotation.y = shape.rotation.y + BABYLON.Tools.ToRadians(-90);
-                            starPos = box.rotation.y;
-                            endPos = box.rotation.y + BABYLON.Tools.ToRadians(-90);
-                            moveBox(starPos, endPos, "rotation.y");
-                            sound.play();
-                            break
-
-                        case "ArrowUp":
-                            // console.log("Arrow up pressed");
-                            forwardConstant = true - forwardConstant;
-                            break
-
-                        case "ArrowLeft":
-                            // console.log("Arrow left pressed");
-                            leftConstant = true - leftConstant;
-                            break
-
-                        case "ArrowRight":
-                            // console.log("Arrow right pressed");
-                            rightConstant = true - rightConstant;
-                            break
-
-                        case "ArrowDown":
-                            // console.log("Arrow down pressed");
-                            backwardsConstant = true - backwardsConstant;
-                            break
-
-                        case " ":
-                            // shape.position.y = shape.position.y + 1;
-                            starPos = box.position.y;
-                            endPos = box.position.y + speed;
-                            moveBox(starPos, endPos, "position.y");
-                            sound.play();
-                            break
-
-                        case "Control":
-                            // shape.position.y = shape.position.y + 1;
-                            starPos = box.position.y;
-                            endPos = box.position.y - speed;
-                            moveBox(starPos, endPos, "position.y");
-                            sound.play();
-                            break
-
-                        case "Enter":
-                            // console.log("ENTER");
-                            break
-
-                        case "o":
-                        case "O":
-                            console.log("free camera");
-                            switchCam("free camera");
-                            break
-
-                        case "p":
-                        case "P":
-                            console.log("arc camera");
-                            switchCam("arc camera");
-                            break
-
-                        case "1":
-                            toggleConstantSpeed = true - toggleConstantSpeed;
-                            break
-                        case "2":
-                            constantSpeed += constantSpeed;
-                            break
-                        case "3":
-                            constantSpeed = constantSpeed / 2;
-                            break
-
-                        case ".":
-                            advancedTexture.removeControl(text1);
-                            break
-                        case ",":
-                            advancedTexture.addControl(text1);
-                            break
-                        case "r":
-                        case "R":
-                            box.position.x = 0;
-                            box.position.y = 0;
-                            box.position.z = 0;
-                    }
+                case 55:
+                    setSkyConfig("material.cameraOffset.y", skyBoxMaterial.cameraOffset.y, 300);
+                    break; // 7
+                case 56:
+                    setSkyConfig("material.cameraOffset.y", skyBoxMaterial.cameraOffset.y, 0);
+                    break; // 8
+                default:
                     break;
             }
         });
 
-        engine.hideLoadingUI();
+        // Set to Day
+        setSkyConfig("material.inclination", skyBoxMaterial.inclination, -0.5);
+
+
+        let transformForce = function(mesh, vec) {
+            let mymatrix = new BABYLON.Matrix();
+            mesh.rotationQuaternion.toRotationMatrix(mymatrix);
+            return BABYLON.Vector3.TransformNormal(vec, mymatrix);
+        };
+
+        let rotate = function(mesh, direction, power) {
+            // console.log("rotate happening", direction.scale(power));
+            mesh.physicsImpostor.setAngularVelocity(
+                mesh.physicsImpostor.getAngularVelocity().add(
+                    direction.scale(power)
+                )
+            );
+        }
+
+        let translate = function(mesh, direction, power) {
+            mesh.physicsImpostor.setLinearVelocity(
+                mesh.physicsImpostor.getLinearVelocity().add(
+                    transformForce(mesh, direction.scale(power))
+                )
+            );
+        }
+
+        let mf = false;
+        let mb = false;
+        let rl = false;
+        let rr = false;
+        let up = false;
+
+        // let song = new BABYLON.Sound("Blade Runner 2049", "sounds/Blade Runner 2049.mp3", scene, null, { loop: true, autoplay: true });
+        // song.setVolume(0.2);
+        let moveSound = new BABYLON.Sound("moveSound", "sounds/move.mp3", scene);
+        moveSound.setVolume(0.1);
+
+        window.addEventListener('keydown', function(e) {
+            switch (e.keyCode) {
+                case 87: //w
+                    mf = true;
+                    break;
+                case 83: //s
+                    mb = true;
+                    break;
+                case 65: //a
+                    rl = true;
+                    break;
+                case 68: //d
+                    rr = true;
+                    break;
+                case 32: //d
+                    up = true;
+                    break;
+                case 79:
+                    console.log("free camera");
+                    switchCam("free camera");
+                    break
+                case 80:
+                    console.log("arc camera");
+                    switchCam("arc camera");
+                    break
+            }
+        });
+        window.addEventListener('keyup', function(e) {
+            switch (e.keyCode) {
+                case 87: //w
+                    mf = false;
+                    break;
+                case 83: //s
+                    mb = false;
+                    break;
+                case 65: //a
+                    rl = false;
+                    break;
+                case 68: //d
+                    rr = false;
+                    break;
+            }
+        });
+
+
+        function update() {
+
+            if (mf == true) {
+                translate(gridBox, new BABYLON.Vector3(0, 0, 1), 0.1);
+            }
+            if (mb == true) {
+                translate(gridBox, new BABYLON.Vector3(0, 0, -1), 0.1);
+            }
+            if (rl == true) {
+                translate(gridBox, new BABYLON.Vector3(-1, 0, 0), 0.1);
+            }
+            if (rr == true) {
+                translate(gridBox, new BABYLON.Vector3(1, 0, 0), 0.1);
+            }
+            // if (up == true) {
+            //     translate(gridBox, new BABYLON.Vector3(0, 1, 0), 0.2);
+            // }
+        }
+
+        function setupPointerLock() {
+
+            canvas.onclick = function() {
+                canvas.requestPointerLock =
+                    canvas.requestPointerLock ||
+                    canvas.mozRequestPointerLock ||
+                    canvas.webkitRequestPointerLock;
+                canvas.requestPointerLock();
+            };
+
+        }
+        setupPointerLock();
+
+        scene.registerBeforeRender(function() {
+            update();
+        });
+
+        let advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("GUI", true, scene);
+        let loadedGUI = await advancedTexture.parseFromURLAsync("http://127.0.0.1:5500/json/moveText.json");
 
         return scene;
-    }
-
-    function moveBox(start, end, direction) {
-        const animBox = new BABYLON.Animation(
-            "Animation",
-            direction,
-            50,
-            BABYLON.Animation.ANIMATIONTYPE_FLOAT,
-            BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE
-        );
-
-        const boxKeys = [];
-        boxKeys.push({
-            frame: 0,
-            value: start
-        });
-
-        boxKeys.push({
-            frame: 30,
-            value: end
-        });
-
-        boxKeys.push({
-            frame: 60,
-            value: end
-        });
-        animBox.setKeys(boxKeys);
-
-        shape.animations = [];
-        shape.animations.push(animBox);
-
-        scene.beginDirectAnimation(shape, [animBox], 0, 60, false, 2);
-
-        console.log(shape.position.x, shape.position.y, shape.position.z);
-    }
+    };
 
     function switchCam(cameraType) {
         if (cameraType == "arc camera") {
@@ -320,56 +309,18 @@ window.addEventListener('DOMContentLoaded', function() {
         return freeCamera;
     }
 
-    function moveConstanty() {
-        if (forwardConstant == true) {
-            shape.position.z = shape.position.z + constantSpeed;
-        }
-        if (backwardsConstant == true) {
-            shape.position.z = shape.position.z - constantSpeed;
-        }
-        if (leftConstant == true) {
-            shape.position.x = shape.position.x - constantSpeed;
-        }
-        if (rightConstant == true) {
-            shape.position.x = shape.position.x + constantSpeed;
-        }
-    }
 
-    var scene = createScene();
-    let toggleConstantSpeed = false;
-    let constantSpeed = 0.1;
+    var scene = await createScene()
 
-    BABYLON.SceneLoader.ImportMesh("", "textures/", "city2.glb", scene, function(newMeshes) {
-        let city = newMeshes[0];
-        city.position.y = 2;
-        city.position.x = -485;
-        city.position.z = 100;
-    });
-
-    // let options = new BABYLON.SceneOptimizerOptions(60, 500);
-    // // options.addOptimization(new BABYLON.HardwareScalingOptimization(0, 1));
-    // options.addOptimization(new BABYLON.HardwareScalingOptimization(0, 1.5));
-    // options.addCustomOptimization(function() {
-    //     environment.ground.setEnabled(false);
-    //     return true;
-    // }, function() {
-    //     return "Turning ground off";
-    // });
-
-    // let optimizer = new BABYLON.SceneOptimizer(scene, options);
-    // optimizer.start();
+    engine.hideLoadingUI();
 
     engine.runRenderLoop(function() {
-        if (toggleConstantSpeed == true) {
-            moveConstanty();
-        }
 
-        //border limit
-        if (shape.position.z > 15000) {
-            shape.position.z = 0;
+        if (shape.position.y < -10) {
+            shape.position.x = 1;
+            shape.position.y = 1;
+            shape.position.z = 1;
         }
-
-        // divFps.innerHTML = engine.getFps().toFixed() + " fps";
         scene.render();
     });
 
