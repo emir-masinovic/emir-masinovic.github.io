@@ -32,45 +32,53 @@ window.addEventListener('DOMContentLoaded', async function() {
             scene);
         arcCamera.inputs.remove(arcCamera.inputs.attached.keyboard);
 
+
         let gridBox = BABYLON.Mesh.CreateBox("Box", 1.0, scene);
         gridBox.physicsImpostor = new BABYLON.PhysicsImpostor(gridBox, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 2, friction: 0.0, restitution: 0 }, scene);
         gridBox.checkCollisions = true;
         shape = gridBox;
-
-        // let clone = gridBox.createInstance("gridBox copy")
-        // clone.position = new BABYLON.Vector3(0, 20, 0);
-        // clone.physicsImpostor = new BABYLON.PhysicsImpostor(clone, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 2, friction: 0.0, restitution: 0 }, scene);
-        // clone.checkCollisions = true;
+        const localAxes = new BABYLON.AxesViewer(scene - 10, 1);
+        localAxes.zAxis.parent = gridBox;
 
 
         let gridBoxMaterial = new BABYLON.GridMaterial("gridBoxMaterial", scene);
-        gridBoxMaterial.gridRatio = 0.3
+        gridBoxMaterial.gridRatio = 0.3;
         gridBoxMaterial.lineColor = new BABYLON.Color3(1, 1, 0);
         gridBox.material = gridBoxMaterial;
-        gridBox.position.y = 10
+        // gridBox.position.y = 0
+
+        function randomIntFromInterval(min, max) { // min and max included 
+            return Math.floor(Math.random() * (max - min + 1) + min)
+        };
 
         const maxCount = 100;
         for (let i = 0; i < maxCount; i++) {
             let clone = gridBox.createInstance("gridBox: " + i);
-            let scale = Math.random() * 10 + 0.3;
+            let scale = Math.random() * 10 + 3;
+            clone.position = new BABYLON.Vector3(
+                randomIntFromInterval(-300, 300),
+                scale,
+                randomIntFromInterval(-300, 300)
+            );
             clone.scaling = clone.scaling.scale(scale);
             let radius = Math.random() * 400;
             let angle = Math.PI * 2 * Math.random();
-            clone.position = new BABYLON.Vector3(
-                Math.cos(angle) * radius,
-                Math.random() * 20,
-                Math.sin(angle) * radius
-            );
-            clone.rotation.x = Math.random() * Math.PI;
-            clone.rotation.y = Math.random() * Math.PI;
-            clone.rotation.z = Math.random() * Math.PI;
-            clone.rotationQuaternion = null;
+
+            // clone.position = new BABYLON.Vector3(
+            //     Math.cos(angle) * radius,
+            //     Math.random() * 20,
+            //     Math.sin(angle) * radius
+            // );
+            // // clone.rotation.x = Math.random() * Math.PI;
+            // clone.rotation.y = Math.random() * Math.PI;
+            // clone.rotation.z = Math.random() * Math.PI;
+            // clone.rotationQuaternion = null;
             clone.physicsImpostor = new BABYLON.PhysicsImpostor(clone, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 2, friction: 0.0, restitution: 0 }, scene);
             clone.checkCollisions = true;
-        }
+        };
 
-        arcCamera.angularSensibilityX = 10000;
-        arcCamera.angularSensibilityY = 10000;
+        arcCamera.angularSensibilityX = 5000;
+        arcCamera.angularSensibilityY = 5000;
         arcCamera.lockedTarget = shape;
         arcCamera.attachControl(canvas, false);
         scene.activeCamera = arcCamera;
@@ -94,7 +102,7 @@ window.addEventListener('DOMContentLoaded', async function() {
         gridPlane.checkCollisions = true;
 
         let gridPlaneMaterial = new BABYLON.GridMaterial("gridPlaneMaterial", scene);
-        gridPlaneMaterial.gridRatio = 3
+        gridPlaneMaterial.gridRatio = 3;
         gridPlaneMaterial.lineColor = new BABYLON.Color3(0.65, 0.27, 0.68, 0.62);
         // gridPlaneMaterial.lineColor = new BABYLON.Color3.FromHexString("#F9C80E");
         // gridPlaneMaterial.lineColor = new BABYLON.Color3(92, 0, 20);
@@ -108,7 +116,7 @@ window.addEventListener('DOMContentLoaded', async function() {
         skyBoxMaterial.backFaceCulling = false;
         skyBoxMaterial.inclination = -0.5;
         skyBox.material = skyBoxMaterial;
-        // skyBoxMaterial.turbidity = 40
+        // skyBoxMaterial.turbidity = 40;
 
         /*
          * Keys:
@@ -184,8 +192,8 @@ window.addEventListener('DOMContentLoaded', async function() {
                 mesh.physicsImpostor.getAngularVelocity().add(
                     direction.scale(power)
                 )
-            );
-        }
+            )
+        };
 
         let translate = function(mesh, direction, power) {
             mesh.physicsImpostor.setLinearVelocity(
@@ -195,34 +203,34 @@ window.addEventListener('DOMContentLoaded', async function() {
             );
         }
 
-        let mf = false;
-        let mb = false;
-        let rl = false;
-        let rr = false;
-        let up = false;
+        let moveForward, moveBackward, moveLeft, moveRight, rotateLeft, rotateRight, up = false;
 
         // let song = new BABYLON.Sound("Blade Runner 2049", "sounds/Blade Runner 2049.mp3", scene, null, { loop: true, autoplay: true });
         // song.setVolume(0.2);
-        let moveSound = new BABYLON.Sound("moveSound", "sounds/move.mp3", scene);
-        moveSound.setVolume(0.1);
+        // let moveSound = new BABYLON.Sound("moveSound", "sounds/move.mp3", scene);
+        // moveSound.setVolume(0.1);
 
         window.addEventListener('keydown', function(e) {
             switch (e.keyCode) {
                 case 87: //w
-                    mf = true;
+                    moveForward = true;
                     break;
                 case 83: //s
-                    mb = true;
+                    moveBackward = true;
                     break;
                 case 65: //a
-                    rl = true;
+                    moveLeft = true;
                     break;
                 case 68: //d
-                    rr = true;
+                    moveRight = true;
                     break;
-                case 32: //d
-                    up = true;
+                case 81: //q
+                    rotateLeft = true;
                     break;
+                case 69: //e
+                    rotateRight = true;
+                    break;
+
                 case 79:
                     console.log("free camera");
                     switchCam("free camera");
@@ -236,16 +244,22 @@ window.addEventListener('DOMContentLoaded', async function() {
         window.addEventListener('keyup', function(e) {
             switch (e.keyCode) {
                 case 87: //w
-                    mf = false;
+                    moveForward = false;
                     break;
                 case 83: //s
-                    mb = false;
+                    moveBackward = false;
                     break;
                 case 65: //a
-                    rl = false;
+                    moveLeft = false;
                     break;
                 case 68: //d
-                    rr = false;
+                    moveRight = false;
+                    break;
+                case 81: //q
+                    rotateLeft = false;
+                    break;
+                case 69: //e
+                    rotateRight = false;
                     break;
             }
         });
@@ -253,43 +267,97 @@ window.addEventListener('DOMContentLoaded', async function() {
 
         function update() {
 
-            if (mf == true) {
-                translate(gridBox, new BABYLON.Vector3(0, 0, 1), 0.1);
+            if (moveForward == true) {
+                translate(gridBox, new BABYLON.Vector3(0, 0, 1), 0.2);
             }
-            if (mb == true) {
-                translate(gridBox, new BABYLON.Vector3(0, 0, -1), 0.1);
+            if (moveBackward == true) {
+                translate(gridBox, new BABYLON.Vector3(0, 0, -1), 0.2);
             }
-            if (rl == true) {
-                translate(gridBox, new BABYLON.Vector3(-1, 0, 0), 0.1);
+            if (moveLeft == true) {
+                translate(gridBox, new BABYLON.Vector3(-1, 0, 0), 0.2);
             }
-            if (rr == true) {
-                translate(gridBox, new BABYLON.Vector3(1, 0, 0), 0.1);
+            if (moveRight == true) {
+                translate(gridBox, new BABYLON.Vector3(1, 0, 0), 0.2);
+            }
+            if (rotateLeft == true) {
+                rotate(gridBox, new BABYLON.Vector3(0, -1, 0), 0.05);
+            }
+            if (rotateRight == true) {
+                rotate(gridBox, new BABYLON.Vector3(0, 1, 0), 0.05);
             }
             // if (up == true) {
             //     translate(gridBox, new BABYLON.Vector3(0, 1, 0), 0.2);
             // }
         }
 
-        function setupPointerLock() {
+        let advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("GUI", true, scene);
+        let loadedGUI = await advancedTexture.parseFromURLAsync("/json/desktopGUI.json");
+        // let loadedGUI = await advancedTexture.parseFromURLAsync("http://127.0.0.1:5500/json/desktopGUI.json");
 
-            canvas.onclick = function() {
-                canvas.requestPointerLock =
-                    canvas.requestPointerLock ||
-                    canvas.mozRequestPointerLock ||
-                    canvas.webkitRequestPointerLock;
-                canvas.requestPointerLock();
-            };
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
 
-        }
-        setupPointerLock();
+            let loadedGUI = await advancedTexture.parseFromURLAsync("/json/mobileGUI.json");
+            // let loadedGUI = await advancedTexture.parseFromURLAsync("http://127.0.0.1:5500/json/mobileGUI.json");
+
+            let sunButton, upButton, moonButton, leftButton, downButton, rightButton;
+            sunButton = advancedTexture.getControlByName("sunButton");
+            upButton = advancedTexture.getControlByName("upButton");
+            moonButton = advancedTexture.getControlByName("moonButton");
+            leftButton = advancedTexture.getControlByName("leftButton");
+            downButton = advancedTexture.getControlByName("downButton");
+            rightButton = advancedTexture.getControlByName("rightButton");
+
+            sunButton.onPointerDownObservable.add(() => {
+                setSkyConfig("material.inclination", skyBoxMaterial.inclination, 0);
+            });
+            upButton.onPointerDownObservable.add(() => {
+                moveForward = true
+            });
+            moonButton.onPointerDownObservable.add(() => {
+                setSkyConfig("material.inclination", skyBoxMaterial.inclination, -0.5);
+            });
+            leftButton.onPointerDownObservable.add(() => {
+                moveLeft = true
+            });
+            downButton.onPointerDownObservable.add(() => {
+                moveBackward = true
+            });
+            rightButton.onPointerDownObservable.add(() => {
+                moveRight = true
+            });
+
+            upButton.onPointerUpObservable.add(() => {
+                moveForward = false
+            });
+            leftButton.onPointerUpObservable.add(() => {
+                moveLeft = false
+            });
+            downButton.onPointerUpObservable.add(() => {
+                moveBackward = false
+            });
+            rightButton.onPointerUpObservable.add(() => {
+                moveRight = false
+            });
+
+        };
+
+        // function setupPointerLock() {
+
+        //     canvas.onclick = function() {
+        //         canvas.requestPointerLock =
+        //             canvas.requestPointerLock ||
+        //             canvas.mozRequestPointerLock ||
+        //             canvas.webkitRequestPointerLock;
+        //         canvas.requestPointerLock();
+        //     };
+
+        // }
+        // setupPointerLock();
+
 
         scene.registerBeforeRender(function() {
             update();
         });
-
-        let advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("GUI", true, scene);
-        let loadedGUI = await advancedTexture.parseFromURLAsync("/json/moveText.json");
-        // let loadedGUI = await advancedTexture.parseFromURLAsync("http://127.0.0.1:5500/json/moveText.json");
 
         return scene;
     };

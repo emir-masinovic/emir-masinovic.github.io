@@ -19,8 +19,8 @@ newClick.addEventListener("pointerdown", e => {
     container.appendChild(dot2)
     document.body.append(container)
 
-    // let ele = document.getElementById('your-score')
-    // ele.innerHTML = 'Your score: ' + clickCounter
+    let ele = document.getElementById('your-score')
+    ele.innerHTML = 'Your score: ' + clickCounter
 
     setTimeout(() => {
         dot.remove();
@@ -83,16 +83,16 @@ let mountains = [
     { "#": 8, "Name": "Guy", "Score": 6 },
     { "#": 9, "Name": "Sim", "Score": 3 },
     { "#": 10, "Name": "Mark", "Score": 2 },
-    { "#": 11, "Name": "Magnus", "Score": 20 },
-    { "#": 12, "Name": "Jacob", "Score": 2 },
-    { "#": 13, "Name": "Sonya", "Score": 1 },
-    { "#": 14, "Name": "Fin", "Score": 8 },
-    { "#": 15, "Name": "Jay", "Score": 7 },
-    { "#": 16, "Name": "Mark", "Score": 7 },
-    { "#": 17, "Name": "Mahooney", "Score": 7 },
-    { "#": 18, "Name": "Guy", "Score": 5 },
-    { "#": 19, "Name": "Sim", "Score": 8 },
-    { "#": 20, "Name": "Mark", "Score": 7 },
+    // { "#": 11, "Name": "Magnus", "Score": 20 },
+    // { "#": 12, "Name": "Jacob", "Score": 2 },
+    // { "#": 13, "Name": "Sonya", "Score": 1 },
+    // { "#": 14, "Name": "Fin", "Score": 8 },
+    // { "#": 15, "Name": "Jay", "Score": 7 },
+    // { "#": 16, "Name": "Mark", "Score": 7 },
+    // { "#": 17, "Name": "Mahooney", "Score": 7 },
+    // { "#": 18, "Name": "Guy", "Score": 5 },
+    // { "#": 19, "Name": "Sim", "Score": 8 },
+    // { "#": 20, "Name": "Mark", "Score": 7 },
 ];
 
 
