@@ -288,7 +288,8 @@ window.addEventListener('DOMContentLoaded', async function() {
         });
 
         let advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("GUI", true, scene);
-        let loadedGUI = await advancedTexture.parseFromURLAsync("http://127.0.0.1:5500/json/moveText.json");
+        let loadedGUI = await advancedTexture.parseFromURLAsync("/json/moveText.json");
+        // let loadedGUI = await advancedTexture.parseFromURLAsync("http://127.0.0.1:5500/json/moveText.json");
 
         return scene;
     };
