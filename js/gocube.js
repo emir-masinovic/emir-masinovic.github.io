@@ -74,13 +74,16 @@ window.addEventListener('DOMContentLoaded', async function() {
             scene);
         gridPlane.checkCollisions = true;
 
+        // var wireFrameMaterial = new BABYLON.StandardMaterial("mm", scene);
+        // wireFrameMaterial.wireframe = true;
+        // gridPlane.material = wireFrameMaterial;
+
         let gridPlaneMaterial = new BABYLON.GridMaterial("gridPlaneMaterial", scene);
         gridPlaneMaterial.gridRatio = 3;
         gridPlaneMaterial.majorUnitFrequency = 30;
         // gridPlaneMaterial.lineColor = new BABYLON.Color3(0.65, 0.27, 0.68, 0.62);
         // gridPlaneMaterial.lineColor = new BABYLON.Color3.FromHexString("#F9C80E");
         gridPlaneMaterial.lineColor = new BABYLON.Color3.FromHexString("#fe01f5");
-
         gridPlane.material = gridPlaneMaterial;
 
         function randomIntFromInterval(min, max) { // min and max included 
@@ -266,41 +269,41 @@ window.addEventListener('DOMContentLoaded', async function() {
         window.addEventListener('keydown', function(e) {
             switch (e.keyCode) {
                 case 87: //w
-                    // moveForward = true;
-                    // translate(gridBox, new BABYLON.Vector3(0, 0, 1), 2);
-                    // console.log(gridBox.physicsImpostor.getLinearVelocity().z)
-                    if (gridBox.physicsImpostor.getLinearVelocity().z >= speedLimit) {
-                        // gridBox.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(gridBox.physicsImpostor.getLinearVelocity().x, 0, speedLimit));
-                        break
-                    }
-                    gridBox.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(gridBox.physicsImpostor.getLinearVelocity().x, 0, acceleration + gridBox.physicsImpostor.getLinearVelocity().z));
+                    moveForward = true;
+                    // // translate(gridBox, new BABYLON.Vector3(0, 0, 1), 2);
+                    // // console.log(gridBox.physicsImpostor.getLinearVelocity().z)
+                    // if (gridBox.physicsImpostor.getLinearVelocity().z >= speedLimit) {
+                    //     // gridBox.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(gridBox.physicsImpostor.getLinearVelocity().x, 0, speedLimit));
+                    //     break
+                    // }
+                    // gridBox.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(gridBox.physicsImpostor.getLinearVelocity().x, 0, acceleration + gridBox.physicsImpostor.getLinearVelocity().z));
                     break;
                 case 83: //s
-                    // moveBackward = true;
-                    // translate(gridBox, new BABYLON.Vector3(0, 0, -1), 2);
-                    if (gridBox.physicsImpostor.getLinearVelocity().z <= -speedLimit) {
-                        // gridBox.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(gridBox.physicsImpostor.getLinearVelocity().x, 0, -speedLimit));
-                        break
-                    }
-                    gridBox.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(gridBox.physicsImpostor.getLinearVelocity().x, 0, -(acceleration + -(gridBox.physicsImpostor.getLinearVelocity().z))));
+                    moveBackward = true;
+                    // // translate(gridBox, new BABYLON.Vector3(0, 0, -1), 2);
+                    // if (gridBox.physicsImpostor.getLinearVelocity().z <= -speedLimit) {
+                    //     // gridBox.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(gridBox.physicsImpostor.getLinearVelocity().x, 0, -speedLimit));
+                    //     break
+                    // }
+                    // gridBox.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(gridBox.physicsImpostor.getLinearVelocity().x, 0, -(acceleration + -(gridBox.physicsImpostor.getLinearVelocity().z))));
                     break;
                 case 65: //a
-                    // moveLeft = true;
-                    // translate(gridBox, new BABYLON.Vector3(-1, 0, 0), 2);
-                    if (gridBox.physicsImpostor.getLinearVelocity().x <= -speedLimit) {
-                        // gridBox.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(-speedLimit, 0, gridBox.physicsImpostor.getLinearVelocity().z));
-                        break
-                    }
-                    gridBox.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(-(acceleration + -(gridBox.physicsImpostor.getLinearVelocity().x)), 0, gridBox.physicsImpostor.getLinearVelocity().z));
+                    moveLeft = true;
+                    // // translate(gridBox, new BABYLON.Vector3(-1, 0, 0), 2);
+                    // if (gridBox.physicsImpostor.getLinearVelocity().x <= -speedLimit) {
+                    //     // gridBox.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(-speedLimit, 0, gridBox.physicsImpostor.getLinearVelocity().z));
+                    //     break
+                    // }
+                    // gridBox.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(-(acceleration + -(gridBox.physicsImpostor.getLinearVelocity().x)), 0, gridBox.physicsImpostor.getLinearVelocity().z));
                     break;
                 case 68: //d
-                    // moveRight = true;
-                    // translate(gridBox, new BABYLON.Vector3(1, 0, 0), 2);
-                    if (gridBox.physicsImpostor.getLinearVelocity().x >= speedLimit) {
-                        // gridBox.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(speedLimit, 0, gridBox.physicsImpostor.getLinearVelocity().z));
-                        break
-                    }
-                    gridBox.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(acceleration + gridBox.physicsImpostor.getLinearVelocity().x, 0, gridBox.physicsImpostor.getLinearVelocity().z));
+                    moveRight = true;
+                    // // translate(gridBox, new BABYLON.Vector3(1, 0, 0), 2);
+                    // if (gridBox.physicsImpostor.getLinearVelocity().x >= speedLimit) {
+                    //     // gridBox.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(speedLimit, 0, gridBox.physicsImpostor.getLinearVelocity().z));
+                    //     break
+                    // }
+                    // gridBox.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(acceleration + gridBox.physicsImpostor.getLinearVelocity().x, 0, gridBox.physicsImpostor.getLinearVelocity().z));
                     break;
                 case 81: //q
                     rotateLeft = true;
