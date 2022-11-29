@@ -14,6 +14,7 @@ newClick.addEventListener("pointerdown", e => {
     container.setAttribute("id", "circle-container")
 
     clickPosition(e, container)
+        // checkTable()
 
     container.appendChild(dot)
     container.appendChild(dot2)
@@ -72,7 +73,7 @@ function generateTableHead(table, data) {
     { "Name": "Mark", "Score": 7 },
 */
 
-let mountains = [
+let players = [
     { "#": 1, "Name": "Magnus", "Score": 10 },
     { "#": 2, "Name": "Jacob", "Score": 9 },
     { "#": 3, "Name": "Sonya", "Score": 8 },
@@ -96,8 +97,8 @@ let mountains = [
 ];
 
 
-// console.log(mountains);
-// const mapSort1 = new Map([...mountains.entries()].sort((a, b) => b[1].Score - a[1].Score));
+// console.log(players);
+// const mapSort1 = new Map([...players.entries()].sort((a, b) => b[1].Score - a[1].Score));
 // console.table(mapSort1)
 
 function generateTableHead(table, data) {
@@ -124,28 +125,25 @@ function generateTable(table, data) {
 
 
 let table = document.querySelector("#table-inner");
-// let data = Object.keys(mountains[0]);
-generateTable(table, mountains);
+// let data = Object.keys(players[0]);
+generateTable(table, players);
 generateTableHead(table, ['#', 'Name', 'Score']);
 
 
-
-
-
-// let totalRowCount = htmlTable.rows.length
+// let totalRowCount = table.rows.length
 // let scoreArr = [0] //easier to compare
 // for (let i = 0; i < totalRowCount; i++) {
 //     if (i == 0) {
 //         continue //skip first row
 //     }
-//     let row = htmlTable.rows[i].cells
+//     let row = table.rows[i].cells
 //     let name = row[1].innerHTML
 //     let score = parseInt(row[2].innerHTML)
 //     scoreArr.push(score)
 // }
 
 // let trackingIndex = scoreArr.length - 1
-// let trackingScore = parseInt(htmlTable.rows[trackingIndex].cells[2].innerHTML)
+// let trackingScore = parseInt(table.rows[trackingIndex].cells[2].innerHTML)
 
 // function checkTable() {
 //     // console.log("Tracking index: " + trackingIndex + " Tracking score: " + trackingScore + " Total clicks: " + clickCounter)
@@ -154,23 +152,23 @@ generateTableHead(table, ['#', 'Name', 'Score']);
 //         // console.log(trackingIndex, trackingScore)
 //         // arr.splice(2, 0, "Lene");
 
-//         let oldName = htmlTable.rows[trackingIndex].cells[1].innerHTML
-//         let oldScore = htmlTable.rows[trackingIndex].cells[2].innerHTML
+//         let oldName = table.rows[trackingIndex].cells[1].innerHTML
+//         let oldScore = table.rows[trackingIndex].cells[2].innerHTML
 
-//         htmlTable.rows[trackingIndex].cells[1].innerHTML = "You"
-//         htmlTable.rows[trackingIndex].cells[2].innerHTML = clickCounter
+//         table.rows[trackingIndex].cells[1].innerHTML = "You"
+//         table.rows[trackingIndex].cells[2].innerHTML = clickCounter
 
 //         if (trackingIndex != 10) {
-//             htmlTable.rows[trackingIndex + 1].cells[1].innerHTML = oldName
-//             htmlTable.rows[trackingIndex + 1].cells[2].innerHTML = oldScore
+//             table.rows[trackingIndex + 1].cells[1].innerHTML = oldName
+//             table.rows[trackingIndex + 1].cells[2].innerHTML = oldScore
 //         }
 
 //         trackingIndex = scoreArr.indexOf(trackingScore) - 1
-//         trackingScore = parseInt(htmlTable.rows[trackingIndex].cells[2].innerHTML)
+//         trackingScore = parseInt(table.rows[trackingIndex].cells[2].innerHTML)
 
 //         // console.log(trackingIndex, trackingScore)
 //     }
 //     if (trackingIndex < 10) {
-//         htmlTable.rows[trackingIndex].cells[2].innerHTML = clickCounter
+//         table.rows[trackingIndex].cells[2].innerHTML = clickCounter
 //     }
 // }
