@@ -2,43 +2,17 @@
 <html lang="en">
 
 <head>
+
     <title>Clicker Leaderboard</title>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+
     <link rel="stylesheet" href="/css/clicker.css">
-    <style>
-        /* #click-inside {
-            -moz-animation: cssAnimation 0s ease-in 5s forwards;
-            -webkit-animation: cssAnimation 0s ease-in 5s forwards;
-            -o-animation: cssAnimation 0s ease-in 5s forwards;
-            animation: cssAnimation 0s ease-in 5s forwards;
-            -webkit-animation-fill-mode: forwards;
-            animation-fill-mode: forwards;
-        }
-        
-        @keyframes cssAnimation {
-            to {
-                width: 0;
-                height: 0;
-                overflow: hidden;
-            }
-        }
-        
-        @-webkit-keyframes cssAnimation {
-            to {
-                width: 0;
-                height: 0;
-                visibility: hidden;
-            }
-        } */
-        /* @media (max-width:768px) {
-            .body {
-                height: 100%;
-            }
-        } */
-    </style>
+
 </head>
 
 <body>
@@ -59,10 +33,13 @@
                             <a class="nav-link" href="index.html">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="GoCube.html">GoCube</a>
+                            <a class="nav-link" href="gocube.html">GoCube</a>
                         </li>
                         <li class="nav-item active">
                             <a class="nav-link" href="clicker.html">Clicker</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="ttt.html">Tic Tac Toe</a>
                         </li>
                     </ul>
                 </div>
@@ -71,19 +48,19 @@
         </nav>
     </header> -->
 
-    <div class="container-fluid" id="content-container">
+    <div class="container-fluid user-select-none" id="content-container">
         <div class="row" id="clicker">
 
             <div class="col-lg-9 col-md-8 col-sm-7 col-6 d-flex align-items-center justify-content-center">
                 <div id="click-inside" class="fw-light">Welcome to Clicker</div>
             </div>
 
-            <div id="table-holder" class="col-lg-3 col-md-4 col-sm-5 col-6 user-select-none">
+            <div id="table-holder" class="col-lg-3 col-md-4 col-sm-5 col-6">
                 <div id="table-outer">
                     <table id="table-inner" class="table table-responsive fw-light">
                     </table>
                 </div>
-                <div id="your-score" class="col" style="position: absolute; bottom: 10px;">Your score:</div>
+                <div id="your-score" class="col" style="position: absolute; bottom: 0px;">Your score:</div>
                 <!-- <div class="input-group justify-content-end">
                     <input type="text" id="text-name" aria-label="Name" class="form-control" placeholder="Name">
                     <button type="submit" class="btn btn-primary"></button>
@@ -93,10 +70,11 @@
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+
     <script src="/js/clicker.js"></script>
+
 </body>
 
 </html>
