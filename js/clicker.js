@@ -3,6 +3,13 @@ const newClick = document.querySelector("#click-surface");
 const playerName = document.querySelector("#player-name");
 const playerContainer = document.querySelector("#player-name-button");
 const playerTable = document.querySelector("#second-table");
+const audio = new Audio("../sounds/click.mp3");
+audio.playbackRate = 16;
+audio.volume = 0.1;
+// audio.loop = true;
+
+const modal = document.querySelector("#staticBackdrop");
+
 
 let activePlayer = null;
 let playerList = ["Jacob", "Magnus", "Lila", "Somky", "Pipo", "Tatu", "Zet", "Rob", "Ross", "Angela", "Honduras", "Punjabi", "Tank", "UNIT", "ABSOLUTE", "Big Fudge", "Undertaker", "Kakshi", "KFC", "Ballon"];
@@ -149,6 +156,7 @@ newClick.addEventListener("pointerdown", e => {
     if (e.target.tagName != "BUTTON") {
 
         clickCounter++;
+        audio.play();
 
         updatePlayers();
 
@@ -190,17 +198,19 @@ const tableContainer = document.querySelector("#table-container");
 const showLeaderboard = document.querySelector("#show-leaderboard");
 showLeaderboard.addEventListener("pointerdown", e => {
     if (dnone == false) {
+        showLeaderboard.innerText = "Show Leaderboard";
 
-        document.body.style.height = "100vh";
-
-        // newClick.classList.add("100vh");
-
+        // document.body.style.height = "100%";
         table.classList.add("d-none");
         tableContainer.classList.add("d-none");
         dnone = true;
+
+        newClick.classList.add("vh-100");
     } else {
-        // table.classList.add("border border-light");
-        document.body.style.height = "100%";
+        showLeaderboard.innerText = "Hide Leaderboard";
+
+        newClick.classList.remove("vh-100");
+        // document.body.style.height = "100vh";
         table.classList.remove("d-none");
         tableContainer.classList.remove("d-none");
         dnone = false;
