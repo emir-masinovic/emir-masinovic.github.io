@@ -1,174 +1,208 @@
-const newClick = document.querySelector("#clicker")
+const table = document.querySelector("#main-table");
+const newClick = document.querySelector("#click-surface");
+const playerName = document.querySelector("#player-name");
+const playerContainer = document.querySelector("#player-name-button");
+const playerTable = document.querySelector("#second-table");
 
+let activePlayer = null;
+let playerList = ["Jacob", "Magnus", "Lila", "Somky", "Pipo", "Tatu", "Zet", "Rob", "Ross", "Angela", "Honduras", "Punjabi", "Tank", "UNIT", "ABSOLUTE", "Big Fudge", "Undertaker", "Kakshi", "KFC", "Ballon"];
 let clickCounter = 0;
-newClick.addEventListener("pointerdown", e => {
-    clickCounter++
+let players = createPlayers(playerList);
+createHTMLTable(players);
 
-    const dot = document.createElement("div")
-    const dot2 = document.createElement("div")
-    const container = document.createElement("div")
-
-    dot.classList.add("dot1")
-    dot2.classList.add("dot2")
-    dot.id = e.pointerId
-    container.setAttribute("id", "circle-container")
-
-    clickPosition(e, container)
-        // checkTable()
-
-    container.appendChild(dot)
-    container.appendChild(dot2)
-    document.body.append(container)
-
-    let ele = document.getElementById('your-score')
-    ele.innerHTML = 'Your score: ' + clickCounter
-
-    setTimeout(() => {
-        dot.remove();
-        dot2.remove();
-        container.remove()
-            // console.log('Dot removed')
-    }, 2000)
-})
-
-function clickPosition(e, dot) {
-    dot.style.width = `${e.width * 20}px`
-    dot.style.height = `${e.height * 20}px`
-    dot.style.left = `${e.pageX}px`
-    dot.style.top = `${e.pageY}px`
-}
-
-
-function generateTableHead(table, data) {
-    let thead = table.createTHead();
-    let row = thead.insertRow();
-    for (let key of data) {
-        let th = document.createElement("th");
-        let text = document.createTextNode(key);
-        th.appendChild(text);
-        row.appendChild(th);
+function createPlayers(somePlayerList) {
+    let players = []
+        //somePlayerList.length
+        //or custom size
+    for (let i = 0; i < 10; i++) {
+        let score = 1 + Math.floor(Math.random() * 20) //Score size
+        let player = { name: somePlayerList[i], score: score }
+        players.push(player)
     }
-}
+    players.sort((a, b) => b.score - a.score)
+    return players
+};
 
-/*
- { "Name": "Magnus", "Score": 10 },
-    { "Name": "Jacob", "Score": 9 },
-    { "Name": "Sonya", "Score": 8 },
-    { "Name": "Fin", "Score": 8 },
-    { "Name": "Jay", "Score": 7 },
-    { "Name": "Mark", "Score": 7 },
-    { "Name": "Mahooney", "Score": 7 },
-    { "Name": "Guy", "Score": 6 },
-    { "Name": "Sim", "Score": 3 },
-    { "Name": "Mark", "Score": 2 },
-    { "Name": "Magnus", "Score": 20 },
-    { "Name": "Jacob", "Score": 2 },
-    { "Name": "Sonya", "Score": 1 },
-    { "Name": "Fin", "Score": 8 },
-    { "Name": "Jay", "Score": 7 },
-    { "Name": "Mark", "Score": 7 },
-    { "Name": "Mahooney", "Score": 7 },
-    { "Name": "Guy", "Score": 5 },
-    { "Name": "Sim", "Score": 8 },
-    { "Name": "Mark", "Score": 7 },
-*/
+function createHTMLTable(somePlayerList) {
 
-let players = [
-    { "#": 1, "Name": "Magnus", "Score": 10 },
-    { "#": 2, "Name": "Jacob", "Score": 9 },
-    { "#": 3, "Name": "Sonya", "Score": 8 },
-    { "#": 4, "Name": "Fin", "Score": 8 },
-    { "#": 5, "Name": "Jay", "Score": 7 },
-    { "#": 6, "Name": "Mark", "Score": 7 },
-    { "#": 7, "Name": "Mahooney", "Score": 7 },
-    { "#": 8, "Name": "Guy", "Score": 6 },
-    { "#": 9, "Name": "Sim", "Score": 3 },
-    { "#": 10, "Name": "Mark", "Score": 2 },
-    // { "#": 11, "Name": "Magnus", "Score": 20 },
-    // { "#": 12, "Name": "Jacob", "Score": 2 },
-    // { "#": 13, "Name": "Sonya", "Score": 1 },
-    // { "#": 14, "Name": "Fin", "Score": 8 },
-    // { "#": 15, "Name": "Jay", "Score": 7 },
-    // { "#": 16, "Name": "Mark", "Score": 7 },
-    // { "#": 17, "Name": "Mahooney", "Score": 7 },
-    // { "#": 18, "Name": "Guy", "Score": 5 },
-    // { "#": 19, "Name": "Sim", "Score": 8 },
-    // { "#": 20, "Name": "Mark", "Score": 7 },
-];
+    for (let i = 0; i < somePlayerList.length; i++) {
+        const row = document.createElement("tr")
+        const positionCell = document.createElement("td")
+        const playerCell = document.createElement("td")
+        const scoreCell = document.createElement("td")
 
+        positionCell.innerText = i + 1; //Skip 0 position
+        playerCell.innerText = somePlayerList[i].name
+        scoreCell.innerText = somePlayerList[i].score
 
-// console.log(players);
-// const mapSort1 = new Map([...players.entries()].sort((a, b) => b[1].Score - a[1].Score));
-// console.table(mapSort1)
-
-function generateTableHead(table, data) {
-    let thead = table.createTHead();
-    let row = thead.insertRow();
-    for (let key of data) {
-        let th = document.createElement("th");
-        let text = document.createTextNode(key);
-        th.appendChild(text);
-        row.appendChild(th);
+        row.append(positionCell, playerCell, scoreCell)
+        table.append(row)
     }
-}
+};
 
-function generateTable(table, data) {
-    for (let element of data) {
-        let row = table.insertRow();
-        for (key in element) {
-            let cell = row.insertCell();
-            let text = document.createTextNode(element[key]);
-            cell.appendChild(text);
+let playerContainerStatus = false;
+playerContainer.addEventListener("pointerdown", e => {
+
+    if (playerContainerStatus == true) {
+
+        //Update local players list
+        activePlayer.name = playerName.value;
+        let position = players.indexOf(activePlayer) + 1;
+
+        //Update HTML table for the new player
+        table.rows[position].cells[1].innerText = playerName.value;
+
+        //Update HTML player container for the new player
+        let newPlayerName = playerTable.rows[0].cells[1]; //Inner text can't be stored as a variable
+        newPlayerName.innerText = playerName.value;
+
+        return;
+    }
+
+    activePlayer = { name: playerName.value, score: clickCounter };
+    players.push(activePlayer);
+
+    createPlayerCointainer();
+    playerContainerStatus = true;
+});
+
+function createPlayerCointainer() {
+    const row = document.createElement("tr");
+    const positionCell = document.createElement("td");
+    const playerCell = document.createElement("td");
+    const scoreCell = document.createElement("td");
+
+    positionCell.innerText = players.length;
+    playerCell.innerText = activePlayer.name;
+    scoreCell.innerText = activePlayer.score;
+
+    positionCell.style.width = "5%";
+    playerCell.style.width = "80%";
+
+    row.append(positionCell, playerCell, scoreCell);
+    playerTable.append(row);
+};
+
+function updatePlayers() {
+
+    activePlayer.score = clickCounter;
+    let position = players.indexOf(activePlayer);
+
+    playerTable.rows[0].cells[2].innerText = clickCounter;
+
+    if (table.rows[position].cells[2].innerText == "Score") {
+        table.rows[position + 1].cells[2].innerText = clickCounter;
+        return;
+    }
+
+    // Only change positions from player until person with less score
+    for (let i = position; i > 0; i--) {
+
+        let playerAbove = players[i - 1];
+
+        if (activePlayer.score > playerAbove.score) {
+
+            players[i - 1] = activePlayer;
+            players[i] = playerAbove;
+
+            //Update position for player container below leaderboard
+            playerTable.rows[0].cells[0].innerText = i;
+            updateHTMLTable(i, activePlayer, i + 1, playerAbove);
         }
     }
-}
+
+    //If player didn't move, just update the score, if in the table
+    if (players.indexOf(activePlayer) + 1 < players.length) {
+        table.rows[players.indexOf(activePlayer) + 1].cells[2].innerText = clickCounter;
+    }
+    // console.table(players);
+};
 
 
-let table = document.querySelector("#table-inner");
-// let data = Object.keys(players[0]);
-generateTable(table, players);
-generateTableHead(table, ['#', 'Name', 'Score']);
+function updateHTMLTable(upPos, activePlayer, downPos, playerAbove) {
 
+    let upperRowPosition = table.rows[upPos].cells[0];
+    let upperRowName = table.rows[upPos].cells[1];
+    let upperRowScore = table.rows[upPos].cells[2];
 
-// let totalRowCount = table.rows.length
-// let scoreArr = [0] //easier to compare
-// for (let i = 0; i < totalRowCount; i++) {
-//     if (i == 0) {
-//         continue //skip first row
-//     }
-//     let row = table.rows[i].cells
-//     let name = row[1].innerHTML
-//     let score = parseInt(row[2].innerHTML)
-//     scoreArr.push(score)
-// }
+    //If player reaches the top, stop. Don't go into the table head
+    if (upperRowPosition.innerText == "#") { return; }
 
-// let trackingIndex = scoreArr.length - 1
-// let trackingScore = parseInt(table.rows[trackingIndex].cells[2].innerHTML)
+    upperRowPosition.innerText = upPos;
+    upperRowName.innerText = activePlayer.name;
+    upperRowScore.innerText = activePlayer.score;
 
-// function checkTable() {
-//     // console.log("Tracking index: " + trackingIndex + " Tracking score: " + trackingScore + " Total clicks: " + clickCounter)
+    //If player is kicking the bottom person, exclude them from the leaderboard
+    //but outside of table rows so skip with return
+    if (downPos == players.length) { return; }
 
-//     if (trackingScore < clickCounter) {
-//         // console.log(trackingIndex, trackingScore)
-//         // arr.splice(2, 0, "Lene");
+    let downRowPosition = table.rows[downPos].cells[0];
+    let downRowName = table.rows[downPos].cells[1];
+    let downRowScore = table.rows[downPos].cells[2];
 
-//         let oldName = table.rows[trackingIndex].cells[1].innerHTML
-//         let oldScore = table.rows[trackingIndex].cells[2].innerHTML
+    downRowPosition.innerText = downPos;
+    downRowName.innerText = playerAbove.name;
+    downRowScore.innerText = playerAbove.score;
+};
 
-//         table.rows[trackingIndex].cells[1].innerHTML = "You"
-//         table.rows[trackingIndex].cells[2].innerHTML = clickCounter
+newClick.addEventListener("pointerdown", e => {
+    if (e.target.tagName != "BUTTON") {
 
-//         if (trackingIndex != 10) {
-//             table.rows[trackingIndex + 1].cells[1].innerHTML = oldName
-//             table.rows[trackingIndex + 1].cells[2].innerHTML = oldScore
-//         }
+        clickCounter++;
 
-//         trackingIndex = scoreArr.indexOf(trackingScore) - 1
-//         trackingScore = parseInt(table.rows[trackingIndex].cells[2].innerHTML)
+        updatePlayers();
 
-//         // console.log(trackingIndex, trackingScore)
-//     }
-//     if (trackingIndex < 10) {
-//         table.rows[trackingIndex].cells[2].innerHTML = clickCounter
-//     }
-// }
+        const dot = document.createElement("div");
+        const dot2 = document.createElement("div");
+        dot.id = e.pointerId;
+        dot.classList.add("dot1");
+        dot2.classList.add("dot2");
+        const container = document.createElement("div");
+        container.setAttribute("id", "circle-container");
+
+        clickPosition(e, container);
+
+        container.append(dot);
+        container.append(dot2);
+        document.body.append(container);
+
+        setTimeout(() => {
+            dot.remove();
+            dot2.remove();
+            container.remove()
+        }, 2000);
+    }
+});
+
+function clickPosition(e, dot) {
+    // dot.style.width = `${e.width * 20}px`
+    // dot.style.height = `${e.height * 20}px`
+    dot.style.width = `${20}px`;
+    dot.style.height = `${20}px`;
+    dot.style.left = `${e.pageX}px`;
+    dot.style.top = `${e.pageY}px`;
+};
+
+//dnone = display none, to hide the leaderboard
+//but need tableContainer for the outer container borders as well
+let dnone = false;
+const tableContainer = document.querySelector("#table-container");
+const showLeaderboard = document.querySelector("#show-leaderboard");
+showLeaderboard.addEventListener("pointerdown", e => {
+    if (dnone == false) {
+
+        document.body.style.height = "100vh";
+
+        // newClick.classList.add("100vh");
+
+        table.classList.add("d-none");
+        tableContainer.classList.add("d-none");
+        dnone = true;
+    } else {
+        // table.classList.add("border border-light");
+        document.body.style.height = "100%";
+        table.classList.remove("d-none");
+        tableContainer.classList.remove("d-none");
+        dnone = false;
+    }
+});

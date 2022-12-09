@@ -1,83 +1,38 @@
-/* html {
-    height: 100%;
-} */
-
 body {
-    background-color: rgba(71, 149, 195, .4);
-    background: radial-gradient(ellipse at top, #4795c3, transparent), radial-gradient(ellipse at bottom, #5d6755, transparent);
-    background-repeat: no-repeat;
+    /* background: #2fa0b4e7; */
+    background-image: linear-gradient(#2E4770, #CE5E82);
+    background-repeat: no-repeat, repeat, repeat;
     height: 100vh;
+    width: 100%;
 }
 
-#content-container {
-    height: 100%;
-}
-
-#clicker {
-    color: #e2ded0c7;
-    border: 2px solid #C34795;
-    height: 100%;
-    /* border-top: 2px solid #C34795;
-    border-left: 2px solid #C34795;
-    border-bottom: 2px solid #C34795; */
-}
-
-#click-inside {
-    text-shadow: 1px 1px #C34795;
-    /* font-size: 30px; */
-}
-
-#table-holder {
-    border-left: 2px solid #C34795;
-}
-
-#table-outer {
-    text-shadow: 1px 1px #C34795;
-}
-
-#table-inner {
-    color: #e2ded0c7;
-    border-color: #C34795;
-    /* max-height: 90vh;
-    overflow: auto;
-    display: inline-block; */
-    /* --table-width: 100%; */
-}
-
-thead {
-    border-bottom: 2px solid #C34795;
-}
-
-#your-score {
-    border-bottom: 2px solid #C34795;
-    color: #e2ded0c7;
-    text-shadow: 1px 1px #C34795;
-    /* width: 20%; */
-}
-
-#text-name {
+.table-responsive {
+    border-radius: 15px;
     background-color: transparent;
-    border: 2px solid #C34795;
-    color: #e2ded0c7;
+    border: 1px solid white;
 }
 
+.table {
+    border-top: 10px solid transparent;
+}
 
-/* .dot{
-    position:absolute; 
-    background-color:red;
-    transform:translate(-50%, -50%);
-    border-radius: 50%;
-    
-} */
+#container-score {
+    background-color: rgba(255, 255, 255, 0.824);
+    border-radius: 12px;
+}
 
 #circle-container {
     position: absolute;
     transform: translate(-50%, -50%);
 }
 
+td {
+    min-width: 100px;
+    max-width: 100px;
+    overflow: hidden;
+}
+
 .dot1 {
-    width: 0px;
-    height: 0px;
     position: absolute;
     left: 50%;
     top: 50%;
@@ -98,8 +53,6 @@ thead {
 }
 
 .dot2 {
-    width: 0px;
-    height: 0px;
     position: absolute;
     left: 50%;
     top: 50%;
@@ -147,16 +100,5 @@ thead {
         width: 100%;
         height: 100%;
         opacity: 0;
-    }
-}
-
-@media (max-width:768px) {
-    .col-md-4 {
-        overflow: auto;
-        height: 99vh;
-    }
-    #circle-container {
-        width: 20px!important;
-        height: 20px!important;
     }
 }
