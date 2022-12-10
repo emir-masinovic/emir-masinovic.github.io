@@ -22,7 +22,7 @@ function createPlayers(somePlayerList) {
         //somePlayerList.length
         //or custom size
     for (let i = 0; i < 10; i++) {
-        let score = 1 + Math.floor(Math.random() * 20) //Score size
+        let score = 1 + Math.floor(Math.random() * 30) //Score size
         let player = { name: somePlayerList[i], score: score }
         players.push(player)
     }
@@ -139,6 +139,10 @@ function updateHTMLTable(upPos, activePlayer, downPos, playerAbove) {
     upperRowName.innerText = activePlayer.name;
     upperRowScore.innerText = activePlayer.score;
 
+    upperRowPosition.style.color = "white";
+    upperRowName.style.color = "white";
+    upperRowScore.style.color = "white";
+
     //If player is kicking the bottom person, exclude them from the leaderboard
     //but outside of table rows so skip with return
     if (downPos == players.length) { return; }
@@ -150,6 +154,10 @@ function updateHTMLTable(upPos, activePlayer, downPos, playerAbove) {
     downRowPosition.innerText = downPos;
     downRowName.innerText = playerAbove.name;
     downRowScore.innerText = playerAbove.score;
+
+    downRowPosition.style.color = "rgba(255,255,255,.5)";
+    downRowName.style.color = "rgba(255,255,255,.5)";
+    downRowScore.style.color = "rgba(255,255,255,.5)";
 };
 
 newClick.addEventListener("pointerdown", e => {
@@ -216,3 +224,21 @@ showLeaderboard.addEventListener("pointerdown", e => {
         dnone = false;
     }
 });
+
+const sunIcon = document.querySelector(".bi.bi-sun");
+sunIcon.addEventListener("pointerdown", e => {
+
+    sunIcon.classList.add("d-none");
+    moonIcon.classList.remove("d-none");
+
+    document.body.classList.toggle("dark-theme")
+})
+
+const moonIcon = document.querySelector(".bi.bi-moon");
+moonIcon.addEventListener("pointerdown", e => {
+
+    sunIcon.classList.remove("d-none");
+    moonIcon.classList.add("d-none");
+
+    document.body.classList.toggle("dark-theme")
+})
