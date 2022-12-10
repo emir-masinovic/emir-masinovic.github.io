@@ -1,33 +1,39 @@
 :root {
-    --navbar: #2c8485f2;
-    --background: #39AAAB;
+    --navbar: #F5EBE0;
+    --background: #FEFCF3;
     --box-shadow-color: black;
-    --box-shadow-size: 0 0 4px;
+    --box-shadow-size: 0 0 3px;
     /* Text and border color */
-    --text-border: white;
-    --text-faded: rgba(255, 255, 255, .5);
-    --link-hover: rgba(255, 255, 255, .75);
+    --text-border: rgb(30, 28, 28);
+    --text-faded: rgba(0, 0, 0, 0.5);
+    --link-hover: rgba(21, 21, 21, 0.954);
 }
 
 .dark-theme {
     --navbar: #343a40;
     --background: #464e56;
-    /* --navbar-dark: #343a40; */
-    /* --background-dark: #464e56; */
+    --text-border: rgb(206, 206, 206);
+    --text-faded: rgba(177, 177, 177, 0.5);
+    --link-hover: rgba(234, 234, 234, 0.75);
+    transition: 2s;
 }
 
 body {
     background: var(--background);
     height: 100vh;
     width: 100%;
+    transition: 2s;
 }
 
 .navbar {
     background: var(--navbar);
+    border-bottom: 1px solid var(--text-border);
+    box-shadow: var(--box-shadow-size) var(--box-shadow-color);
 }
 
 .nav-link {
     color: var(--text-faded);
+    transition: 0.6s;
 }
 
 .nav-link:hover {
@@ -46,15 +52,16 @@ body {
 }
 
 .btn.btn-transparent {
-    color: var(--text-border);
+    color: var(--text-faded);
     border-color: var(--text-border);
     box-shadow: var(--box-shadow-size) var(--box-shadow-color);
-    transition: 0.6s;
+    transition: 0.8s;
 }
 
 .btn.btn-transparent:hover {
-    background-color: var(--text-border);
-    color: var(--background);
+    /* font-size: 1.1rem; */
+    background-color: var(--navbar);
+    color: var(--text-border);
 }
 
 .table-responsive {
@@ -63,6 +70,11 @@ body {
     border: 1px solid var(--text-border);
     box-shadow: var(--box-shadow-size) var(--box-shadow-color);
 }
+
+
+/* #table-container2 {
+    height: 60px;
+} */
 
 .table {
     color: var(--text-faded);
@@ -94,11 +106,23 @@ td {
 
 #player-name {
     border-radius: 0.25rem;
+    background-color: var(--text-faded);
     /* border-color: var(--box-shadow-color); */
     /* box-shadow: var(--box-shadow-size) var(--box-shadow-color); */
 }
 
+input::placeholder {
+    color: var(--text-border);
+}
+
+#circle-container {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    user-select: none;
+}
+
 .dot1 {
+    user-select: none;
     position: absolute;
     left: 50%;
     top: 50%;
@@ -118,12 +142,8 @@ td {
     background-color: black;
 }
 
-#circle-container {
-    position: absolute;
-    transform: translate(-50%, -50%);
-}
-
 .dot2 {
+    user-select: none;
     position: absolute;
     left: 50%;
     top: 50%;

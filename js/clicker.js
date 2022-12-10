@@ -12,7 +12,7 @@ const modal = document.querySelector("#staticBackdrop");
 
 
 let activePlayer = null;
-let playerList = ["Jacob", "Magnus", "Lila", "Somky", "Pipo", "Tatu", "Zet", "Rob", "Ross", "Angela", "Honduras", "Punjabi", "Tank", "UNIT", "ABSOLUTE", "Big Fudge", "Undertaker", "Kakshi", "KFC", "Ballon"];
+let playerList = ["Bella", "Magnus", "Lila", "Somky", "Pipo", "Tatu", "Zet", "Rob", "Ross", "Angela", "Honduras", "Punjabi", "Tank", "UNIT", "ABSOLUTE", "Big Fudge", "Undertaker", "Kakshi", "KFC", "Ballon"];
 let clickCounter = 0;
 let players = createPlayers(playerList);
 createHTMLTable(players);
@@ -139,9 +139,9 @@ function updateHTMLTable(upPos, activePlayer, downPos, playerAbove) {
     upperRowName.innerText = activePlayer.name;
     upperRowScore.innerText = activePlayer.score;
 
-    upperRowPosition.style.color = "white";
-    upperRowName.style.color = "white";
-    upperRowScore.style.color = "white";
+    upperRowPosition.style.color = "var(--text-border)";
+    upperRowName.style.color = "var(--text-border)";
+    upperRowScore.style.color = "var(--text-border)";
 
     //If player is kicking the bottom person, exclude them from the leaderboard
     //but outside of table rows so skip with return
@@ -155,13 +155,45 @@ function updateHTMLTable(upPos, activePlayer, downPos, playerAbove) {
     downRowName.innerText = playerAbove.name;
     downRowScore.innerText = playerAbove.score;
 
-    downRowPosition.style.color = "rgba(255,255,255,.5)";
-    downRowName.style.color = "rgba(255,255,255,.5)";
-    downRowScore.style.color = "rgba(255,255,255,.5)";
+    downRowPosition.style.color = "var(--text-faded)";
+    downRowName.style.color = "var(--text-faded)";
+    downRowScore.style.color = "var(--text-faded)";
 };
+
+// const response = fetch("https://reqbin.com/echo/post/json", {
+//             method: 'POST',
+//             headers: {
+//                 'Accept': 'application/json',
+//                 'Content-Type': 'application/json'
+//             },
+//             body: `{
+//                 "Id": 78912,
+//                 "Customer": "Jason Sweet",
+//                 "Quantity": 1,
+//                 "Price": 18.00
+//                 }`,
+//         });
 
 newClick.addEventListener("pointerdown", e => {
     if (e.target.tagName != "BUTTON") {
+
+        fetch("https://reqbin.com/echo/post/json", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: `{
+       "Id": 78912,
+       "Customer": "Jason Sweet",
+       "Quantity": 1,
+       "Price": 18.00
+      }`
+        }).then(response => {
+            response.json().then((json) => {
+                console.log(json);
+            });
+        });
 
         clickCounter++;
         audio.play();
