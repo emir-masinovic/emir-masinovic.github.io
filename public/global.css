@@ -1,0 +1,27 @@
+@font-face {
+    font-family: 'Roboto Condensed', sans-serif;
+    src: url(/public/build/fonts/Roboto_Condensed/RobotoCondensed-Regular.ttf);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+body {
+    background-color: #202142;
+    line-height: 1.6;
+    color: #fff;
+}
+
+ul {
+    list-style: none;
+}
+
+.container {
+    max-width: 768px;
+    margin: 100px auto;
+    padding: 0 20px;
+}
