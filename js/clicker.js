@@ -257,13 +257,18 @@ showLeaderboard.addEventListener("pointerdown", e => {
     }
 });
 
+const navbar = document.querySelector(".navbar");
+
 const sunIcon = document.querySelector(".bi.bi-sun");
 sunIcon.addEventListener("pointerdown", e => {
 
     sunIcon.classList.add("d-none");
     moonIcon.classList.remove("d-none");
 
-    document.body.classList.toggle("dark-theme")
+    navbar.classList.remove("navbar-dark");
+    navbar.classList.add("navbar-light");
+
+    document.body.classList.toggle("light-theme")
 })
 
 const moonIcon = document.querySelector(".bi.bi-moon");
@@ -272,5 +277,8 @@ moonIcon.addEventListener("pointerdown", e => {
     sunIcon.classList.remove("d-none");
     moonIcon.classList.add("d-none");
 
-    document.body.classList.toggle("dark-theme")
+    navbar.classList.add("navbar-dark");
+    navbar.classList.remove("navbar-light");
+
+    document.body.classList.toggle("light-theme")
 })

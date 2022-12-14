@@ -12,27 +12,20 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 
+    <!-- <link rel="stylesheet" href="css/breakpoint.css"> -->
     <style>
-        .body {
-            background-color: rgba(71, 149, 195, .4);
-            background: radial-gradient(ellipse at top, #4795c3, transparent), radial-gradient(ellipse at bottom, #4d9f0c, transparent);
-            background-repeat: no-repeat;
+        body {
+            background-color: #464e56;
             height: 100vh;
             width: 100%;
-        }
-        
-        @media (max-width:768px) {
-            .body {
-                height: 100%;
-            }
         }
     </style>
 </head>
 
-<body class="body" onload="InitDemo();">
+<body onload="InitDemo();">
 
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-white">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#"></a>
 
@@ -41,22 +34,13 @@
                 </button>
 
                 <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-                    <i class="bi bi-x-diamond text-white"></i>
+                    <i class="bi bi-x-diamond"></i>
                     <ul class="navbar-nav">
                         <li class="nav-item active">
                             <a class="nav-link" href="index.html">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="gocube.html">GoCube</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="clicker.html">Clicker</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="ttt.html">Tic Tac Toe</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="feedback.html">Feedback Ratings</a>
+                            <a class="nav-link" href="projects.html">Projects</a>
                         </li>
                     </ul>
                 </div>
@@ -66,22 +50,22 @@
     </header>
 
     <main>
-        <div class="container my-5">
+        <div class="container my-5 text-white">
             <div class="row">
-
-                <div class="col-lg-5 col-md-5 col-sm-5">
+                <div class="col-xl-5 col-lg-5 col-md-6 col-sm-12 col-12">
                     <img src="/image/emir.jpg" alt="" class="img-fluid rounded-circle">
                 </div>
 
-                <div class="col-lg-7 col-md-7 col-sm-7 col-9 my-4 mx-auto" id="descript">
+                <div class="col-xl col-lg-7 col-md-6 col-sm col my-4 mx-auto">
                     <h1>Emir Masinovic</h1>
-                    <p class="lead">I'm working on combining website design and computer graphics.</p>
+                    <p class="lead">I'm working on combining website development and computer graphics.</p>
 
                     <div id="cube" class="text-center">
                         <canvas id="game-surface" width="200px" height="200px">
                             Your browser doesn't support HTML5
                         </canvas>
                     </div>
+
                 </div>
 
             </div>
