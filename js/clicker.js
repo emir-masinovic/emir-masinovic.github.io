@@ -3,10 +3,9 @@ const newClick = document.querySelector("#click-surface");
 const playerName = document.querySelector("#player-name");
 const playerContainer = document.querySelector("#player-name-button");
 const playerTable = document.querySelector("#second-table");
-const audio = new Audio("../sounds/click.mp3");
+const audio = new Audio("../sounds/click2.mp3");
 audio.playbackRate = 16;
-audio.volume = 0.1;
-// audio.loop = true;
+// audio.volume = 0.5;
 
 const modal = document.querySelector("#staticBackdrop");
 
@@ -19,8 +18,8 @@ createHTMLTable(players);
 
 function createPlayers(somePlayerList) {
     let players = []
-        //somePlayerList.length
-        //or custom size
+    //somePlayerList.length
+    //or custom size
     for (let i = 0; i < 10; i++) {
         let score = 1 + Math.floor(Math.random() * 30) //Score size
         let player = { name: somePlayerList[i], score: score }
@@ -41,6 +40,10 @@ function createHTMLTable(somePlayerList) {
         positionCell.innerText = i + 1; //Skip 0 position
         playerCell.innerText = somePlayerList[i].name
         scoreCell.innerText = somePlayerList[i].score
+
+        // positionCell.style.width = "1%";
+        // playerCell.style.width = "30px";
+        playerCell.classList.add("player-cell");
 
         row.append(positionCell, playerCell, scoreCell)
         table.append(row)
@@ -83,8 +86,9 @@ function createPlayerCointainer() {
     playerCell.innerText = activePlayer.name;
     scoreCell.innerText = activePlayer.score;
 
-    positionCell.style.width = "5%";
-    playerCell.style.width = "80%";
+    positionCell.style.width = "80px";
+    playerCell.classList.add("player-cell");
+    scoreCell.style.width = "100px";
 
     row.append(positionCell, playerCell, scoreCell);
     playerTable.append(row);
@@ -176,24 +180,6 @@ function updateHTMLTable(upPos, activePlayer, downPos, playerAbove) {
 
 newClick.addEventListener("pointerdown", e => {
     if (e.target.tagName != "BUTTON") {
-
-        fetch("https://reqbin.com/echo/post/json", {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: `{
-       "Id": 78912,
-       "Customer": "Jason Sweet",
-       "Quantity": 1,
-       "Price": 18.00
-      }`
-        }).then(response => {
-            response.json().then((json) => {
-                console.log(json);
-            });
-        });
 
         clickCounter++;
         audio.play();
