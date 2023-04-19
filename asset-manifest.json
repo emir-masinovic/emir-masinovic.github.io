@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.a9e2a17f.css",
-    "main.js": "/static/js/main.2421ade1.js",
+    "main.css": "/static/css/main.6c30906b.css",
+    "main.js": "/static/js/main.691595e6.js",
     "static/media/gocube.jpg": "/static/media/gocube.9d01b39d132edd98eec7.jpg",
     "static/media/Roboto-Thin.ttf": "/static/media/Roboto-Thin.a732a12eb07742232407.ttf",
     "static/media/pokemon.png": "/static/media/pokemon.05b15868b37de0cf0e2f.png",
@@ -15,13 +15,13 @@
     "static/media/sun.svg": "/static/media/sun.ea32b0b957ca9833df1241fe943423cc.svg",
     "static/media/baklava.svg": "/static/media/baklava.a438c0c0958598331a0eb93e671509d0.svg",
     "static/media/moon.svg": "/static/media/moon.8e4f45879b7e7e67721ab2f6a9d67bc0.svg",
-    "static/media/menu.svg": "/static/media/menu.f98b98b4905b36b844a65327ecaadc32.svg",
     "index.html": "/index.html",
-    "main.a9e2a17f.css.map": "/static/css/main.a9e2a17f.css.map",
-    "main.2421ade1.js.map": "/static/js/main.2421ade1.js.map"
+    "static/media/menu.svg": "/static/media/menu.f98b98b4905b36b844a65327ecaadc32.svg",
+    "main.6c30906b.css.map": "/static/css/main.6c30906b.css.map",
+    "main.691595e6.js.map": "/static/js/main.691595e6.js.map"
   },
   "entrypoints": [
-    "static/css/main.a9e2a17f.css",
-    "static/js/main.2421ade1.js"
+    "static/css/main.6c30906b.css",
+    "static/js/main.691595e6.js"
   ]
 }
