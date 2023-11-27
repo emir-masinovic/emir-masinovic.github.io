@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" type="text/css" href="global.css" />
+        <title>Rosbridge Test</title>
+    </head>
+
+    <body>
+        <div class="title">
+            <h1>Rosbridge demo</h1>
+            <p>
+                Connection:
+                <span id="status">N/A</span>
+            </p>
+        </div>
+
+        <div class="card-container">
+            <div class="card">
+                <p>Messages received from: <code>/terminal_topic</code></p>
+                <ul id="terminal-messages" style="font-weight: bold"></ul>
+            </div>
+
+            <div class="card">
+                <div>ROS IP</div>
+                <input type="text" id="ros-ip" />
+                <button onclick="connectToCustomROS()">Connect</button>
+            </div>
+
+            <div class="card">
+                <p>Messages received from: <code>/first_node_topic</code></p>
+                <ul id="first-node-messages" style="font-weight: bold"></ul>
+            </div>
+            <div class="card">
+                <p>Images received from: <code>/image_topic</code></p>
+                <div id="image-container"></div>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="rosNodeHandler.js"></script>
+        <script type="text/javascript" src="roslib.min.js"></script>
+        <!-- <script type="text/javascript" src="https://s3.eu-west-1.amazonaws.com/rosject.io/js/roslib.min.js"></script> -->
+    </body>
+</html>
