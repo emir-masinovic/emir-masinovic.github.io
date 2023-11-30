@@ -1,0 +1,1 @@
+body{height:calc(100vh - 80px)}#canvasZone.svelte-gu8g5l{width:100vw;height:100%;overflow:hidden}#renderCanvas.svelte-gu8g5l{width:100%;height:100%;touch-action:none}#fps.svelte-gu8g5l{position:absolute;background-color:#464e56;border:1px solid black;text-align:center;color:#fff;top:100px;right:20px;padding:5px}
