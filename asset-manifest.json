@@ -1,21 +1,22 @@
 {
   "files": {
-    "main.css": "/static/css/main.44119e5f.css",
-    "main.js": "/static/js/main.721a745d.js",
-    "static/media/pokemon.png": "/static/media/pokemon.05b15868b37de0cf0e2f.png",
+    "main.css": "/static/css/main.452031d1.css",
+    "main.js": "/static/js/main.d5302ffc.js",
+    "static/media/parallax.jpg": "/static/media/parallax.5a4ed4937487ec8b06ae.jpg",
+    "static/media/pokemontitle.png": "/static/media/pokemontitle.05b15868b37de0cf0e2f.png",
     "static/media/emir.jpg": "/static/media/emir.6c631ee093a92d3e1616.jpg",
-    "static/media/feedback.jpg": "/static/media/feedback.9f4d7768f7feeff90b0f.jpg",
+    "static/media/ratings.jpg": "/static/media/ratings.9f4d7768f7feeff90b0f.jpg",
     "static/media/pokemon.jpg": "/static/media/pokemon.a79d873968fcb97026b5.jpg",
-    "static/media/Pokemon Solid.ttf": "/static/media/Pokemon Solid.5d60be1f7ff5fcc21fc1.ttf",
-    "static/media/leaderboard.jpg": "/static/media/leaderboard.5b3250ef4002df74ceb5.jpg",
+    "static/media/clock.jpg": "/static/media/clock.b3336495c80ccea41b21.jpg",
+    "static/media/clicker.jpg": "/static/media/clicker.5b3250ef4002df74ceb5.jpg",
     "static/media/droplet.mp3": "/static/media/droplet.104e70a9c2f77764e95b.mp3",
     "static/media/baklava.svg": "/static/media/baklava.a7d97600d921bfec380d22b8b15002ec.svg",
     "index.html": "/index.html",
-    "main.44119e5f.css.map": "/static/css/main.44119e5f.css.map",
-    "main.721a745d.js.map": "/static/js/main.721a745d.js.map"
+    "main.452031d1.css.map": "/static/css/main.452031d1.css.map",
+    "main.d5302ffc.js.map": "/static/js/main.d5302ffc.js.map"
   },
   "entrypoints": [
-    "static/css/main.44119e5f.css",
-    "static/js/main.721a745d.js"
+    "static/css/main.452031d1.css",
+    "static/js/main.d5302ffc.js"
   ]
 }
