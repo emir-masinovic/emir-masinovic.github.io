@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RoboVoyager</title>
+    <link rel="stylesheet" href="./index.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script src="index.js" defer></script>
+  </head>
+
+  <body class="dark-theme" onclick="handleMenu(event)">
+    <header>
+      <button id="menu-button" onclick="toggleActive(this)">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <button id="theme-button" onclick="toggleTheme()">
+        <i class="fas fa-sun"></i>
+        <i class="fas fa-moon display-none"></i>
+      </button>
+    </header>
+
+    <nav id="navbar">
+      <ul>
+        <li><a href="#hero" onclick="handleNavigationClick(event)">Home</a></li>
+        <li>
+          <a href="#about" onclick="handleNavigationClick(event)">About</a>
+        </li>
+        <li>
+          <a href="#how-it-works" onclick="handleNavigationClick(event)"
+            >How it Works</a
+          >
+        </li>
+        <li>
+          <a href="#features" onclick="handleNavigationClick(event)"
+            >Features</a
+          >
+        </li>
+        <li>
+          <a href="#videos" onclick="handleNavigationClick(event)">Videos</a>
+        </li>
+        <li>
+          <a href="#gallery" onclick="handleNavigationClick(event)">Gallery</a>
+        </li>
+        <li>
+          <a href="#meet-the-team" onclick="handleNavigationClick(event)"
+            >Meet the Team</a
+          >
+        </li>
+        <li>
+          <a href="#contact" onclick="handleNavigationClick(event)">Contact</a>
+        </li>
+      </ul>
+    </nav>
+
+    <main>
+      <section id="hero">
+        <h1>RoboVoyager</h1>
+        <p>A website interface for robotic teleoperations</p>
+        <img src="./images/interface/interface.gif" alt="interface gif" />
+        <div class="button-container">
+          <a
+            href="https://github.com/emir-masinovic/RoboVoyager"
+            class="button"
+            target="_blank"
+          >
+            <div>GitHub</div></a
+          >
+
+          <a href="https://robovoyager.online" class="button" target="_blank">
+            <div>Demo</div></a
+          >
+
+          <a href="/images/poster.pdf" class="button" target="_blank"
+            ><div>Poster</div></a
+          >
+        </div>
+      </section>
+
+      <section id="about">
+        <h2>About</h2>
+        <p>
+          RoboVoyager is a website interface through which users can control a
+          robot remotely. With the help of a virtual joystick, 8 different
+          directions are possible. A video stream is provided to see where the
+          robot is going. Naturally, the ability to monitor its sensors is
+          important, such as battery level, CPU utilization, and GPS
+          coordinates. While exploring the environment, capturing data from the
+          camera, Lidar, and GPS, is easy at the press of a button.
+          Additionally, to help highlight objects of interest, object detection
+          and segmentation features are useful
+        </p>
+      </section>
+
+      <section id="how-it-works">
+        <h2>How It Works</h2>
+        <p>
+          The interface communicates with the robot through Rosbridge. It does
+          so through a WebSocket and subscribing/unsubscribing to Robot
+          Operating System (ROS) topics. When a user turns on a feature such as
+          video streaming, the website sends a request to subscribe to that
+          topic and if it exists, ROS grants the request and transmits the data
+        </p>
+        <br />
+        <p>
+          These 3 parts can be separated and hosted from different machines, or
+          all of them can be hosted from the same machine (robot's computer) to
+          decrease the complexity and latency
+          <br />
+        </p>
+        <br />
+        <p>
+          Note that if running these parts on a LAN, the robot and devices have
+          to be connected to the same network and the range depends on the wifi
+          card's capabilities
+        </p>
+        <img src="./images/structure.png" alt="" loading="lazy" />
+      </section>
+
+      <section id="features">
+        <h2>Features</h2>
+
+        <div class="feature">
+          <h3>Controls</h3>
+          <p>
+            A virtual joystick is provided to remotely control the robot. It
+            sends a vector of movement to the robot by publishing it to the
+            <code>/cmd_vel</code> (command velocity) topic. There are 8 possible
+            directions, including moving diagonally. RoboVoyager is a
+            <a href="https://medium.com/manual-robotics/drives-76c2b2dac97c"
+              >differential</a
+            >
+            robot, so one wheel's speed is "differentiated" from the other and
+            that's how it can rotate around and move in a curvy line
+          </p>
+          <i class="fa-solid fa-gamepad"></i>
+          <img src="images/robot/differential_drive.png" alt="" />
+        </div>
+
+        <div class="feature">
+          <h3>Video Streaming</h3>
+          <p>
+            While a user is controling a robot, the ability to see where it is
+            going is essential. Video streaming is offered at a low resolution
+            for faster viewing speed. Data is sent/downloaded only after a user
+            turns on
+            <code>/video_streaming</code> and subscribes to the topic
+          </p>
+          <i class="fa-solid fa-video"></i>
+        </div>
+
+        <div class="feature">
+          <h3>Sensors</h3>
+          <p>
+            Monitor sensor data of the robot. The most useful sensors are
+            battery level, GPS, and network traffic for tracking the quality of
+            the video
+          </p>
+          <!-- <i class="fa-regular fa-rectangle-list"></i> -->
+          <i class="fa-solid fa-satellite-dish"></i>
+        </div>
+
+        <div class="feature">
+          <h3>Data Saving</h3>
+          <p>
+            Saving data is easy at a press of a button. Possible to pause during
+            recording, take multiple recordings. Data saver node collects
+            information from Lidar, GPS, and Zed2 camera (but the camera has
+            many more sensors inside it). Be cautious of prolonged use
+          </p>
+          <i class="fa-regular fa-pen-to-square"></i>
+        </div>
+
+        <div class="feature">
+          <h3>Object Detection</h3>
+          <p>
+            While exploring the environemnt, highlighting points of interest is
+            beneficial
+          </p>
+          <i class="fa-solid fa-vector-square"></i>
+        </div>
+
+        <div class="feature">
+          <h3>Segmentation</h3>
+          <p>
+            Along with Object Detection feature, masks of recognized object can
+            be highlighted as a secondary option
+          </p>
+          <!-- <i class="fa-solid fa-person"></i> -->
+          <i class="fa-solid fa-person-walking-dashed-line-arrow-right"></i>
+        </div>
+      </section>
+
+      <section id="videos">
+        <h2>Videos</h2>
+        <div>
+          <iframe
+            loading="lazy"
+            src="https://www.youtube.com/embed/s3dPSFCTd8s?si=UxTJ5Dx8L_0gAGNZ"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+          ></iframe>
+
+          <iframe
+            loading="lazy"
+            src="https://www.youtube.com/embed/jPLvw_jDZmU?si=HqSwhcDjhT9j8PQm"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+          ></iframe>
+
+          <iframe
+            loading="lazy"
+            src="https://www.youtube.com/embed/TC3YL00Meec?si=wVd0Aev998_2DpIt"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </section>
+
+      <section id="gallery">
+        <h2>Gallery</h2>
+        <div>
+          <img loading="lazy" src="./images/interface/corridor.png" alt="" />
+          <img loading="lazy" src="./images/robot/robot_main.png" alt="" />
+          <img loading="lazy" src="./images/robot/robot_inside.png" alt="" />
+          <img loading="lazy" src="/images/jetson/jetson4.jpeg" alt="" />
+          <img loading="lazy" src="./images/team/group.jpeg" alt="" />
+          <img loading="lazy" src="./images/team/office.jpeg" alt="" />
+          <img loading="lazy" src="./images/team/emir_robot.jpeg" alt="" />
+        </div>
+      </section>
+
+      <section id="meet-the-team">
+        <h2>Meet the Team</h2>
+
+        <div class="team">
+          <div class="teammate">
+            <img loading="lazy" src="/images/meet_team/aysu.jpg" alt="aysu" />
+            <h2>Aysu Aylin Kaplan</h2>
+            <h3>CE Student</h3>
+          </div>
+
+          <div class="teammate">
+            <img loading="lazy" src="/images/meet_team/duygu.jpg" alt="duygu" />
+            <h2>Duygu Sena Öztürk</h2>
+            <h3>CE Student</h3>
+          </div>
+
+          <div class="teammate">
+            <img loading="lazy" src="/images/meet_team/emir.jpg" alt="emir" />
+            <h2>Emir Masinovic</h2>
+            <h3>CE Student</h3>
+          </div>
+
+          <div class="teammate">
+            <img
+              loading="lazy"
+              src="/images/meet_team/ozgur.jpeg"
+              alt="ozgur"
+            />
+            <h2>Asst. Prof. Özgür Erkent</h2>
+            <h3>Supervisor</h3>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <section id="contact">
+        <h2>Contact</h2>
+        <button onclick="copyToClipboard()">
+          <i class="fas fa-envelope" onclick="copyToClipboard()"></i>
+          emir.masinovic.bh@gmail.com
+          <div id="copy-message">Copied!</div>
+        </button>
+      </section>
+    </footer>
+  </body>
+</html>
