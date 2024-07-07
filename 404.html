@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="/favicon.png" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		<link rel="modulepreload" href="/_app/immutable/entry/start.OfnmZZxU.js">
+		<link rel="modulepreload" href="/_app/immutable/chunks/entry.DP7gb3Of.js">
+		<link rel="modulepreload" href="/_app/immutable/chunks/scheduler.8_a5fo8a.js">
+		<link rel="modulepreload" href="/_app/immutable/chunks/index.DsAfukRX.js">
+		<link rel="modulepreload" href="/_app/immutable/entry/app.DF8c5uop.js">
+		<link rel="modulepreload" href="/_app/immutable/chunks/index.BsiXrUL5.js">
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<script>
+			let storedTheme = localStorage.getItem('theme');
+			const systemPreferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
+				? 'dark-theme'
+				: 'light-theme';
+			if (storedTheme === 'system' || !storedTheme) storedTheme = systemPreferredTheme;
+
+			document.body.classList.remove('light-theme', 'dark-theme', 'system');
+			document.body.classList.add(storedTheme ?? systemPreferredTheme);
+		</script>
+
+		<div style="display: contents">
+			<script>
+				{
+					__sveltekit_124mfsg = {
+						base: ""
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("/_app/immutable/entry/start.OfnmZZxU.js"),
+						import("/_app/immutable/entry/app.DF8c5uop.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element);
+					});
+				}
+			</script>
+		</div>
+	</body>
+</html>
