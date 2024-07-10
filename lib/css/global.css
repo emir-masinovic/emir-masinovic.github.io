@@ -1,0 +1,90 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 62.5%;
+}
+
+body {
+    font-size: 1.6rem;
+}
+
+.dark-theme {
+    /*
+    Generated from: https://colorffy.com/dark-theme-generator
+
+    Dark/Mixed - 100: For body background color
+    Dark/Mixed - 200: For cards background color
+    Dark/Mixed - 300: For chips buttons, dropdowns background color
+    Dark/Mixed - 400: For sidebars, navbar background color
+    Dark/Mixed - 500: For modal, dialogs background color
+    Dark/Mixed - 600: For on background texts color
+    */
+
+    --color-primary-000: #f5f5f5;
+    --color-primary-100: #f02b2b;
+    --color-primary-200: #f64f40;
+    --color-primary-300: #fc6956;
+    --color-primary-400: #ff816d;
+    --color-primary-500: #ff9784;
+    --color-primary-600: #ffad9b;
+
+    --color-surface-100: #121212;
+    --color-surface-200: #282828;
+    --color-surface-300: #3f3f3f;
+    --color-surface-400: #575757;
+    --color-surface-500: #717171;
+    --color-surface-600: #8b8b8b;
+
+    --color-surface-mixed-100: #271815;
+    --color-surface-mixed-200: #3c2d2a;
+    --color-surface-mixed-300: #524441;
+    --color-surface-mixed-400: #685c59;
+    --color-surface-mixed-500: #807572;
+    --color-surface-mixed-600: #988f8d;
+
+    --background: var(--color-surface-100);
+    --text: var(--color-primary-000);
+
+    color: var(--text);
+    background: var(--background);
+}
+
+.light-theme {
+    --color-primary-000: #1f1f1f;
+    --color-primary-100: #2b7af0;
+    --color-primary-200: #5488f2;
+    --color-primary-300: #7095f4;
+    --color-primary-400: #88a4f6;
+    --color-primary-500: #9eb2f8;
+    --color-primary-600: #b3c1fa;
+
+    --color-surface-100: #f0f0f0;
+    --color-surface-200: #f2f2f2;
+    --color-surface-300: #f3f3f3;
+    --color-surface-400: #f5f5f5;
+    --color-surface-500: #f7f7f7;
+    --color-surface-600: #f8f8f8;
+
+    --color-surface-mixed-100: #c2cbf1;
+    --color-surface-mixed-200: #c9d1f3;
+    --color-surface-mixed-300: #d0d6f4;
+    --color-surface-mixed-400: #d6dcf6;
+    --color-surface-mixed-500: #dde2f7;
+    --color-surface-mixed-600: #dde2f7;
+
+    --background: var(--color-surface-100);
+    --text: var(--color-primary-000);
+
+    color: var(--text);
+    background: var(--background);
+}
+
+/*a {*/
+/*    color: inherit;*/
+/*    text-decoration: none;*/
+/*}*/

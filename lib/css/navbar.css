@@ -1,0 +1,82 @@
+.dark-theme {
+    --navbar-bg: var(--color-surface-mixed-300);
+
+    --link-text: var(--text);
+    --link-hover-text: var(--color-surface-600);
+    --link-active-text: var(--color-primary-500);
+
+    --select-bg: var(--color-primary-500);
+    --select-text: var(--background);
+    --select-hover-bg: var(--background);
+    --select-hover-text: var(--text);
+}
+
+.light-theme {
+    --navbar-bg: var(--color-primary-500);
+
+    --link-text: var(--text);
+    --link-hover-text: var(--color-primary-200);
+    --link-active-text: var(--color-primary-100);
+
+    --select-bg: var(--color-primary-200);
+    --select-text: var(--text);
+    --select-hover-bg: var(--background);
+    --select-hover-text: var(--text);
+}
+
+.global-navbar {
+    display: flex;
+    justify-content: space-between;
+    height: 60px;
+    padding: 20px;
+    background: var(--navbar-bg);
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
+}
+
+.logo {
+    height: 20px;
+    width: 20px;
+    color: var(--select-bg);
+}
+
+.logo img {
+    height: 100%;
+    width: 100%;
+}
+
+.global-navbar img:hover {
+    scale: 0.9;
+}
+
+.global-navbar ul {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--link-text);
+}
+
+.nav-link:hover {
+    color: var(--link-hover-text);
+}
+
+.nav-link.active {
+    font-weight: bold;
+    color: var(--link-active-text);
+}
+
+.global-navbar select {
+    background: var(--select-bg);
+    color: var(--select-text);
+    padding: 0 5px;
+    border: none;
+}
+
+.global-navbar select:hover {
+    cursor: pointer;
+    background: var(--select-hover-bg);
+    color: var(--select-hover-text);
+}
