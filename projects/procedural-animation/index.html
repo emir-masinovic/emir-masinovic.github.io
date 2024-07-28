@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <!-- <link rel="stylesheet" href="./lib/css/global.css"/> -->
+    <!-- <link rel="stylesheet" href="./lib/css/navbar.css"/> -->
+    <title>Procedural</title>
+
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: steelblue;
+      }
+
+      #snake {
+        position: absolute;
+        width: 0px;
+        height: 0px;
+        inset: 0;
+        margin: auto;
+      }
+
+      .segment {
+        position: absolute;
+        border-radius: 50%;
+        border: 1px solid black;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="snake"></div>
+
+    <script type="module">
+      import { Snake } from "./snake.js";
+
+      let newSnake = new Snake();
+      for (let i = 0; i < 10; i++) newSnake.addSegment();
+      console.log(newSnake);
+
+      const snakeHTML = document.getElementById("snake");
+      for (let i = 0; i < newSnake.length; i++) {
+        const snakeDiv = document.createElement("div");
+        snakeDiv.classList = "segment";
+        snakeDiv.style.width = newSnake.radius + "px";
+        snakeDiv.style.height = newSnake.radius + "px";
+        snakeDiv.style.top = `${(i * newSnake.radius) / 2}px`;
+        snakeDiv.style.left = `0px`;
+        snakeDiv.style.zIndex = newSnake.length - i;
+        snakeDiv.style.background = `rgb(
+          ${randomBetween(0, 255)}, 
+          ${randomBetween(0, 255)}, 
+          ${randomBetween(0, 255)})`;
+        snakeHTML.appendChild(snakeDiv);
+      }
+
+      const segmentList = document.querySelectorAll(".segment");
+
+      window.addEventListener("keypress", (event) => {
+        const keyPresed = event.key.toLowerCase();
+        console.log(segmentList[0].getBoundingClientRect());
+
+        //prettier-ignore
+        switch (keyPresed) {
+          case "w":
+            segmentList[0].style.top   = parseInt(segmentList[0].style.top.split("px")[0])    +   (-newSnake.speed) + "px";
+            break;
+
+          case "a":
+            segmentList[0].style.left  = parseInt(segmentList[0].style.left.split("px")[0])   +   (-newSnake.speed) + "px";
+            break;
+
+          case "s":
+            segmentList[0].style.top   = parseInt(segmentList[0].style.top.split("px")[0])    +   (newSnake.speed) + "px";
+            break;
+
+          case "d":
+            segmentList[0].style.left  = parseInt(segmentList[0].style.left.split("px")[0])   +   (newSnake.speed) + "px";
+            break;
+
+          default:
+            break;
+        }
+      });
+
+      function randomBetween(min, max) {
+        // min and max included
+        return Math.floor(Math.random() * (max - min + 1) + min);
+      }
+    </script>
+  </body>
+</html>
