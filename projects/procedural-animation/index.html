@@ -19,12 +19,9 @@
         background: steelblue;
       }
 
-      #snake {
-        position: absolute;
-        width: 0px;
-        height: 0px;
-        inset: 0;
-        margin: auto;
+      #container {
+        height: 100dvh;
+        /* width: 100%; */
       }
 
       .segment {
@@ -37,32 +34,59 @@
   </head>
 
   <body>
-    <div id="snake"></div>
+    <div id="container">
+      <!-- <button>Add</button> -->
+    </div>
 
     <script type="module">
-      import { Snake } from "./snake.js";
+      // import { Snake } from "./snake.js";
 
-      let newSnake = new Snake();
-      for (let i = 0; i < 10; i++) newSnake.addSegment();
-      console.log(newSnake);
+      function spawnSnake(segments, segmentWidth) {
+        const container = document.getElementById("container");
 
-      const snakeHTML = document.getElementById("snake");
-      for (let i = 0; i < newSnake.length; i++) {
         const snakeDiv = document.createElement("div");
-        snakeDiv.classList = "segment";
-        snakeDiv.style.width = newSnake.radius + "px";
-        snakeDiv.style.height = newSnake.radius + "px";
-        snakeDiv.style.top = `${(i * newSnake.radius) / 2}px`;
-        snakeDiv.style.left = `0px`;
-        snakeDiv.style.zIndex = newSnake.length - i;
-        snakeDiv.style.background = `rgb(
-          ${randomBetween(0, 255)}, 
-          ${randomBetween(0, 255)}, 
+        snakeDiv.id = "snake";
+        snakeDiv.style.position = "absolute";
+        snakeDiv.style.top = randomBetween(0, container.clientHeight) + "px";
+        snakeDiv.style.left = randomBetween(0, container.clientWidth) + "px";
+
+        for (let i = 0; i < segments; i++) {
+          const snakeSegmentDiv = document.createElement("div");
+          snakeSegmentDiv.classList = "segment";
+          snakeSegmentDiv.style.width = segmentWidth + "px";
+          snakeSegmentDiv.style.height = segmentWidth + "px";
+          snakeSegmentDiv.style.top = `${(i * segmentWidth) / 2}px`;
+          snakeSegmentDiv.style.left = `0px`;
+          snakeSegmentDiv.style.zIndex = segments - i;
+          snakeSegmentDiv.style.background = `rgb(
+          ${randomBetween(0, 255)},
+          ${randomBetween(0, 255)},
           ${randomBetween(0, 255)})`;
-        snakeHTML.appendChild(snakeDiv);
+          snakeDiv.appendChild(snakeSegmentDiv);
+        }
+
+        console.log(snakeDiv);
+        container.appendChild(snakeDiv);
       }
 
-      const segmentList = document.querySelectorAll(".segment");
+      spawnSnake(10, 20);
+
+      function moveSnake() {
+        const snake = document.getElementById("snake");
+        snake.firstChild.style.left = "10px";
+        for (let i = 0; i < snake.childNodes.length; i++) {
+          if (i > 0) {
+            snake.childNodes[i].style.left = -i + 10 + "px";
+          }
+        }
+        console.log(snake.childNodes[1]);
+      }
+
+      setTimeout(() => {
+        moveSnake();
+      }, 1000);
+
+      // const segmentList = document.querySelectorAll(".segment");
 
       window.addEventListener("keypress", (event) => {
         const keyPresed = event.key.toLowerCase();
