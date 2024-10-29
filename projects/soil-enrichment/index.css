@@ -1,0 +1,29 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Monospace;
+  overscroll-behavior: none;
+}
+
+#info {
+  position: absolute;
+  bottom: 0;
+  padding: 20px;
+  line-height: 20px;
+  font-weight: bold;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+}
+
+.lil-gui {
+  right: 0 !important;
+  left: 0;
+  margin: 2px;
+}

@@ -1,0 +1,35 @@
+.dark-theme {
+  --card-border: var(--color-surface-400);
+}
+
+.light-theme {
+  --card-border: #969696;
+}
+
+.projects {
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.card {
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  width: clamp(20px, 100%, 320px);
+}
+
+.card img {
+  width: 100%;
+  height: 300px;
+  border-radius: 9px 9px 0 0;
+}
+
+.card-body {
+  padding: 10px;
+}
+
+.card p {
+  padding: 10px 0;
+}

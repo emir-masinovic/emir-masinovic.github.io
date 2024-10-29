@@ -1,44 +1,86 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="../lib/css/global.css"/>
-    <link rel="stylesheet" href="../lib/css/navbar.css"/>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="../lib/css/global.css" />
+    <link rel="stylesheet" href="../lib/css/navbar.css" />
+    <link rel="stylesheet" href="../lib/css/projects.css" />
     <title>Projects</title>
-</head>
+  </head>
 
-<body class="system-theme">
-<script src="../lib/js/loadTheme.js"></script>
-<script src="../lib/js/navbar.js" defer></script>
+  <body class="system-theme">
+    <script src="../lib/js/loadTheme.js"></script>
+    <script src="../lib/js/navbar.js" defer></script>
 
-<header>
-    <nav class="global-navbar" aria-label="Main Navigation">
-        <a class="logo"
-           href="https://github.com/emir-masinovic"
-           aria-label="GitHub Profile">
-            <img src="../lib/images/github-mark.svg" alt="GitHub Logo">
+    <header>
+      <nav class="global-navbar" aria-label="Main Navigation">
+        <a
+          class="logo"
+          href="https://github.com/emir-masinovic"
+          aria-label="GitHub Profile"
+        >
+          <img src="../lib/images/github-mark.svg" alt="GitHub Logo" />
         </a>
         <ul>
-            <li><a href="../" class="nav-link">Home</a></li>
-            <li><a href="../projects" class="nav-link active">Projects</a></li>
+          <li><a href="../" class="nav-link">Home</a></li>
+          <li><a href="../projects" class="nav-link active">Projects</a></li>
         </ul>
         <select name="select-theme" id="select-theme" aria-label="Select Theme">
-            <option value="system-theme">System</option>
-            <option value="light-theme">Light</option>
-            <option value="dark-theme">Dark</option>
+          <option value="system-theme">System</option>
+          <option value="light-theme">Light</option>
+          <option value="dark-theme">Dark</option>
         </select>
-    </nav>
-</header>
+      </nav>
+    </header>
 
-<main>
-    <h1>Projects</h1>
-    <a href="./robovoyager-website">RoboVoyager</a>
-    <a href="./procedural-animation">Procedural</a>
-</main>
+    <main>
+      <section class="projects">
+        <div class="card">
+          <div class="card-head">
+            <a href="./robovoyager-website">
+              <img
+                src="https://emir-masinovic.github.io/projects/robovoyager-website/images/interface/corridor.png"
+                alt=""
+              />
+            </a>
+          </div>
+          <div class="card-body">
+            <h3>RoboVoyager</h3>
+            <p>Website interface for robotics teleoperations</p>
+          </div>
+        </div>
 
-<footer></footer>
+        <div class="card">
+          <div class="card-head">
+            <a href="./soil-enrichment/">
+              <img src="" alt="" />
+            </a>
+          </div>
+          <div class="card-body">
+            <h3>Soil Enrichment</h3>
+            <p>Computer Graphics Expriemnt with Big Step Greedy algorithm</p>
+          </div>
+        </div>
 
-</body>
+        <!-- <div class="card">
+          <div class="card-head">
+            <a href="./procedural-animation">
+              <img
+                src="https://emir-masinovic.github.io/projects/robovoyager-website/images/interface/corridor.png"
+                alt=""
+              />
+            </a>
+          </div>
+          <div class="card-body">
+            <h3>Snake Procedural Animation</h3>
+            <p>Inspired by https://www.youtube.com/watch?v=qlfh_rv6khY&ab_channel=argonaut</p>
+          </div>
+        </div> -->
+      </section>
+    </main>
+
+    <footer></footer>
+  </body>
 </html>
